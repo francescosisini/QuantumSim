@@ -1,0 +1,17 @@
+#include "quantum_sim.h"
+
+void circuit(QubitState *state) {
+    int numQubits = state->numQubits;
+
+    // Applicare Hadamard a tutti i qubits
+    for (int i = 0; i < numQubits; i++) {
+        applyHadamard(state, i);
+    }
+
+    // Supponiamo che l'elemento marcato sia lo stato |11>
+    // Applicare l'oracolo di Grover
+    applyZ(state, numQubits - 1); // Applicare Z gate al qubit target
+
+    // Applicare la diffusione di Grover
+    applyGroverDiffusion(state);
+}

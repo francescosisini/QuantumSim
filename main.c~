@@ -1,0 +1,32 @@
+#include <stdio.h>
+#include <complex.h>
+#include "quantum_sim.h"
+
+// Funzione per implementare il problema di Deutsch
+void deutschProblem(QubitState *state) {
+    // Step 1: Applicare Hadamard a entrambi i qubits
+    applyHadamard(state, 0);
+    applyHadamard(state, 1);
+
+    // Step 2: Applicare la funzione di Deutsch (per f(x) = x)
+    applyCNOT(state, 0, 1);
+
+    // Step 3: Applicare Hadamard al primo qubit
+    applyHadamard(state, 0);
+}
+
+int main() {
+    int numQubits = 2; // Utilizziamo 2 qubits per il problema di Deutsch
+    QubitState *state = initializeState(numQubits);
+    
+    deutschProblem(state);
+    
+    // Visualizzare lo stato finale
+    long long dim = 1LL << numQubits;
+    for (long long i = 0; i < dim; i++) {
+        printf("State[%lld] = %.2f + %.2fi\n", i, creal(state->amplitudes[i]), cimag(state->amplitudes[i]));
+    }
+    
+    freeState(state);
+    return 0;
+}
