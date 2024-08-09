@@ -61,6 +61,32 @@ Il circuito di Grover implementato è costituito dai seguenti passaggi:
         Misura entrambi i qubits.
 
 Grafico a Caratteri del Circuito di Grover
+```
+Qubit 0: |0> ----[H]----●----[X]----●----[X]----[H]----[X]----●----[Z]----●----[X]----[H]----
+                        |           |                         |           |         
+Qubit 1: |0> ----[H]----○----[ ]----○----[ ]----[H]----[X]----○----[ ]----○----[X]----[H]----
+```
+Descrizione dello Schema
+
+    [H]: Porta Hadamard (H) – crea una sovrapposizione tra ∣0⟩∣0⟩ e ∣1⟩∣1⟩.
+    [X]: Porta NOT (X) – inverte lo stato del qubit (∣0⟩∣0⟩ diventa ∣1⟩∣1⟩ e viceversa).
+    [Z]: Porta Z (Z) – applica una fase di −1−1 allo stato ∣1⟩∣1⟩.
+    [●]: Controllo della porta CNOT – l'operazione viene eseguita se il qubit di controllo è ∣1⟩∣1⟩.
+    [○]: Target della porta CNOT – il qubit viene invertito se il qubit di controllo è ∣1⟩∣1⟩.
+
+Passaggi del Circuito
+
+    Inizializzazione con Hadamard (H): Entrambi i qubits sono inizialmente nello stato ∣0⟩∣0⟩. Dopo l'applicazione delle porte Hadamard, i qubits sono in una sovrapposizione di tutti gli stati ∣00⟩∣00⟩, ∣01⟩∣01⟩, ∣10⟩∣10⟩, ∣11⟩∣11⟩.
+
+    Oracolo di Grover:
+        CNOT con controllo su Qubit 0 e target su Qubit 1: Questo oracolo inverte l'ampiezza del solo stato ∣11⟩∣11⟩ (dipende dall'elemento marcato).
+        Applicazione delle porte X e CNOT per l'oracolo: Le porte X invertono i qubits prima e dopo la CNOT, per creare la condizione necessaria per l'oracolo.
+
+    Diffusione di Grover:
+        Porte Hadamard (H): Riapplicate su entrambi i qubits.
+        Porte X: Riapplicate su entrambi i qubits.
+        CNOT con controllo su Qubit 0 e target su Qubit 1: Applica la porta Z al qubit target come parte del diffusore di Grover.
+        Porte X e Hadamard (H): Finali, per completare la diffusione.
 
 ## Project Structure
 
