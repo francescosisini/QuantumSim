@@ -48,13 +48,12 @@ void applyHadamard(QubitState *state, int target) {
 2. Porta Pauli-X (X)
 
 La porta Pauli-X agisce come una NOT quantistica, invertendo lo stato del qubit:
-X = (1/sqrt(2)) *| 0  1 |
-                 | 1  0 |
+X = | 0  1 |
+    | 1  0 |
 
 Implementazione in QuantumSim:
 
-c
-
+```
 void applyX(QubitState *state, int target) {
     double complex X[2][2] = {
         {0, 1},
@@ -62,5 +61,24 @@ void applyX(QubitState *state, int target) {
     };
     applySingleQubitGate(state, target, X);
 }
-
+```
 Questa funzione scambia le ampiezze degli stati ∣0⟩∣0⟩ e ∣1⟩∣1⟩ per il qubit target, simulando l'inversione dello stato.
+
+3. Porta Pauli-Z (Z)
+
+La porta Pauli-Z applica una fase di −1−1 allo stato ∣1⟩∣1⟩ del qubit:
+Z = | 1  0 |
+    | 0 -1 |
+
+Implementazione in QuantumSim:
+```
+
+void applyZ(QubitState *state, int target) {
+    double complex Z[2][2] = {
+        {1, 0},
+        {0, -1}
+    };
+    applySingleQubitGate(state, target, Z);
+}
+```
+Questa funzione modifica la fase dello stato ∣1⟩∣1⟩ del qubit target senza alterare le ampiezze degli altri stati.
