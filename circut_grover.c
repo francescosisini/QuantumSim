@@ -1,4 +1,5 @@
 #include "quantum_sim.h"
+#include <stdlib.h>
 #include <stdio.h>
 
 void circuit() {
@@ -19,7 +20,7 @@ void circuit() {
     printf("Hadamard applicato a tutti i qubits.\n");
 
     // Iterazioni dell'algoritmo di Grover
-    for (int iter = 0; iter < numIterations; iter++) {
+    for (int iter = 0; iter < numIterations+4; iter++) {
         printf("Iterazione %d\n", iter + 1);
 
         // --- Inizio dell'oracolo di Grover ---

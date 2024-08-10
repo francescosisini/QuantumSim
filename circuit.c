@@ -2,64 +2,32 @@
 #include <stdio.h>
 
 void circuit() {
-    int numQubits = 2; // Definisci il numero di qubits
-    QubitState *state = initializeState(numQubits); // Inizializza lo stato quantistico
+    int numQubits = 2;
+    QubitState *state = initializeState(numQubits);
 
-    printf("Stato quantistico inizializzato.\n");
-
-    // Applicare Hadamard a tutti i qubits
-    for (int i = 0; i < numQubits; i++) {
-        applyHadamard(state, i);
+    // Stato iniziale: |00>
+    printf("Stato iniziale:\n");
+    for (int i = 0; i < (1 << numQubits); i++) {
+        printf("Stato %d: %f + %fi\n", i, creal(state->amplitudes[i]), cimag(state->amplitudes[i]));
     }
 
-    printf("Hadamard applicato a tutti i qubits.\n");
+    // Applicare X al qubit di controllo per portarlo nello stato |10>
+    applyX(state, 0);
 
-    // Supponiamo che l'elemento marcato sia lo stato |11>
-    // Applicare l'oracolo di Grover
-    applyCNOT(state, 0, 1);  // Controllo il primo qubit, target il secondo qubit
-    applyX(state, 0);  // Applico X gate al primo qubit
-    applyCNOT(state, 0, 1);  // Controllo il primo qubit, target il secondo qubit
-    applyX(state, 0);  // Applico X gate al primo qubit
-
-    printf("Oracolo di Grover applicato.\n");
-
-    // Applicare la diffusione di Grover
-    // Applicare Hadamard a tutti i qubits
-    for (int i = 0; i < numQubits; i++) {
-        applyHadamard(state, i);
+    // Stato dopo X
+    printf("Stato dopo X:\n");
+    for (int i = 0; i < (1 << numQubits); i++) {
+        printf("Stato %d: %f + %fi\n", i, creal(state->amplitudes[i]), cimag(state->amplitudes[i]));
     }
 
-    // Applicare X a tutti i qubits
-    for (int i = 0; i < numQubits; i++) {
-        applyX(state, i);
-    }
-
-    // Applicare una porta multi-controlled-Z (in questo caso, controllato su due qubits)
-    applyCNOT(state, 0, 1);
-    applyZ(state, 1);
+    // Applicare CNOT con controllo su qubit 0 e target su qubit 1
     applyCNOT(state, 0, 1);
 
-    // Applicare X a tutti i qubits
-    for (int i = 0; i < numQubits; i++) {
-        applyX(state, i);
+    // Stato dopo CNOT
+    printf("Stato dopo CNOT:\n");
+    for (int i = 0; i < (1 << numQubits); i++) {
+        printf("Stato %d: %f + %fi\n", i, creal(state->amplitudes[i]), cimag(state->amplitudes[i]));
     }
 
-    // Applicare Hadamard a tutti i qubits
-    for (int i = 0; i < numQubits; i++) {
-        applyHadamard(state, i);
-    }
-
-    printf("Diffusione di Grover applicata.\n");
-
-    // Misurare lo stato finale
-    int *results = measure_all(state);
-    printf("Risultato della misura:\n");
-    for (int i = 0; i < numQubits; i++) {
-        printf("Qubit %d: %d\n", i, results[i]);
-    }
-
-    free(results);
-    freeState(state); // Libera la memoria dello stato quantistico
-
-    printf("Memoria liberata.\n");
+    freeState(state);
 }

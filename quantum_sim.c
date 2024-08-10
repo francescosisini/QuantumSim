@@ -40,13 +40,22 @@ void applyHadamard(QubitState *state, int target) {
     applySingleQubitGate(state, target, H);
 }
 
+
 void applyX(QubitState *state, int target) {
-    double complex X[2][2] = {
-        {0, 1},
-        {1, 0}
-    };
-    applySingleQubitGate(state, target, X);
+    long long dim = 1LL << state->numQubits;
+    for (long long i = 0; i < dim; i++) {
+        // Controlla se il target qubit è 1
+        if ((i >> target) & 1) {
+            // Scambia le ampiezze di i e j
+            long long j = i ^ (1LL << target);
+            double complex temp = state->amplitudes[i];
+            state->amplitudes[i] = state->amplitudes[j];
+            state->amplitudes[j] = temp;
+        }
+    }
 }
+
+
 
 void applyZ(QubitState *state, int target) {
     double complex Z[2][2] = {
@@ -56,17 +65,26 @@ void applyZ(QubitState *state, int target) {
     applySingleQubitGate(state, target, Z);
 }
 
+
+
 void applyCNOT(QubitState *state, int control, int target) {
     long long dim = 1LL << state->numQubits;
     for (long long i = 0; i < dim; i++) {
+        // Se il bit del qubit di controllo è 1
         if ((i >> control) & 1) {
+            // Calcola l'indice con il bit del qubit target invertito
             long long j = i ^ (1LL << target);
-            double complex temp = state->amplitudes[i];
-            state->amplitudes[i] = state->amplitudes[j];
-            state->amplitudes[j] = temp;
+            // Scambia le ampiezze tra lo stato i e lo stato j
+            double complex temp = state->amplitudes[j];
+            state->amplitudes[j] = state->amplitudes[i];
+            state->amplitudes[i] = temp;
         }
     }
 }
+
+
+
+
 
 int* measure_all(QubitState *state) {
     long long dim = 1LL << state->numQubits;
