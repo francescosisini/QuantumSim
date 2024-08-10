@@ -10,6 +10,9 @@ Questo simulatore consente di inizializzare stati quantistici, applicare gate qu
    - Misurazione dello stato quantistico e collasso in uno stato base.
    - Print di debug per tracciare il flusso di esecuzione.
   
+## Documentazione Aggiuntiva
+
+- [Applicazione dei Quantum Gates](./QUANTUM_GATES.md): Scopri come vengono applicati i quantum gates agli stati quantistici in questo progetto.
 
 
 
@@ -23,7 +26,9 @@ QuantumSim/
 ├── circuit.c             # Esempio di circuito quantistico utilizzando il simulatore
 ├── main.c                # File principale per eseguire il circuito quantistico
 ├── Makefile              # Makefile per la compilazione del progetto
-└── README.md             # Documentazione del progetto
+├── README.md             # Documentazione principale del progetto
+└── QUANTUM_GATES.md      # Documentazione dettagliata sull'applicazione dei quantum gates
+```
 ## Requisiti
 
 - GCC (GNU Compiler Collection)
