@@ -82,3 +82,31 @@ void applyZ(QubitState *state, int target) {
 }
 ```
 Questa funzione modifica la fase dello stato ∣1⟩∣1⟩ del qubit target senza alterare le ampiezze degli altri stati.
+
+4. Controlled-NOT (CNOT)
+
+La porta CNOT (Controlled-NOT) agisce su due qubits: un qubit di controllo e un qubit target. 
+Inverte il qubit target solo se il qubit di controllo è nello stato ∣1⟩.
+```
+Cnot = | 1  0  0  0|
+       | 0  1  0  0|
+       | 0  0  0  1|
+       | 0  0  1  0|
+```
+Implementazione in QuantumSim:
+
+```
+
+void applyCNOT(QubitState *state, int control, int target) {
+    long long dim = 1LL << state->numQubits;
+    for (long long i = 0; i < dim; i++) {
+        if ((i >> control) & 1) {
+            long long j = i ^ (1LL << target);
+            double complex temp = state->amplitudes[i];
+            state->amplitudes[i] = state->amplitudes[j];
+            state->amplitudes[j] = temp;
+        }
+    }
+}
+```
+Questa funzione verifica se il qubit di controllo è nello stato ∣1⟩∣1⟩ (mediante la condizione if ((i >> control) & 1)). Se sì, inverte lo stato del qubit target, scambiando le ampiezze degli stati base corrispondenti.
