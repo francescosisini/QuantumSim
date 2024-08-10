@@ -26,7 +26,7 @@ Gli stati quantistici in QuantumSim sono rappresentati da una struttura chiamata
 L'array amplitudes ha dimensione 2numQubits2numQubits e ogni elemento corrisponde all'ampiezza di probabilità di uno degli stati base.
 
 ## Applicazione dei Quantum Gates
-1. Porta Hadamard (H)
+- ### Porta Hadamard (H)
 
 La porta Hadamard crea una sovrapposizione tra gli stati ∣0⟩ e ∣1⟩. La sua matrice è:
 ```
@@ -45,7 +45,7 @@ void applyHadamard(QubitState *state, int target) {
     applySingleQubitGate(state, target, H);
 }
 ```
-2. Porta Pauli-X (X)
+- ### Porta Pauli-X (X)
 
 La porta Pauli-X agisce come una NOT quantistica, invertendo lo stato del qubit:
 X = | 0  1 |
@@ -64,7 +64,7 @@ void applyX(QubitState *state, int target) {
 ```
 Questa funzione scambia le ampiezze degli stati ∣0⟩∣0⟩ e ∣1⟩∣1⟩ per il qubit target, simulando l'inversione dello stato.
 
-3. Porta Pauli-Z (Z)
+- ### Porta Pauli-Z (Z)
 
 La porta Pauli-Z applica una fase di −1−1 allo stato ∣1⟩∣1⟩ del qubit:
 Z = | 1  0 |
@@ -83,7 +83,7 @@ void applyZ(QubitState *state, int target) {
 ```
 Questa funzione modifica la fase dello stato ∣1⟩∣1⟩ del qubit target senza alterare le ampiezze degli altri stati.
 
-4. Controlled-NOT (CNOT)
+- ### Controlled-NOT (CNOT)
 
 La porta CNOT (Controlled-NOT) agisce su due qubits: un qubit di controllo e un qubit target. 
 Inverte il qubit target solo se il qubit di controllo è nello stato ∣1⟩.
@@ -114,7 +114,7 @@ Funzione applySingleQubitGate
 
 Le porte Hadamard, X e Z sono tutte implementate usando una funzione generica applySingleQubitGate, che si occupa di applicare un qualsiasi gate a un singolo qubit. La funzione scorre tutti gli stati del sistema, determina quali stati devono essere modificati, e applica la matrice di trasformazione corrispondente.
 
-Implementazione di applySingleQubitGate:
+### Implementazione di applySingleQubitGate:
 
 ```
 void applySingleQubitGate(QubitState *state, int target, double complex gate[2][2]) {
