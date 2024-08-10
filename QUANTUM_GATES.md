@@ -109,4 +109,24 @@ void applyCNOT(QubitState *state, int control, int target) {
     }
 }
 ```
-Questa funzione verifica se il qubit di controllo è nello stato ∣1⟩∣1⟩ (mediante la condizione if ((i >> control) & 1)). Se sì, inverte lo stato del qubit target, scambiando le ampiezze degli stati base corrispondenti.
+Questa funzione verifica se il qubit di controllo è nello stato ∣1⟩ (mediante la condizione if ((i >> control) & 1)). Se sì, inverte lo stato del qubit target, scambiando le ampiezze degli stati base corrispondenti.
+Funzione applySingleQubitGate
+
+Le porte Hadamard, X e Z sono tutte implementate usando una funzione generica applySingleQubitGate, che si occupa di applicare un qualsiasi gate a un singolo qubit. La funzione scorre tutti gli stati del sistema, determina quali stati devono essere modificati, e applica la matrice di trasformazione corrispondente.
+
+Implementazione di applySingleQubitGate:
+
+```
+void applySingleQubitGate(QubitState *state, int target, double complex gate[2][2]) {
+    long long dim = 1LL << state->numQubits;
+    for (long long i = 0; i < dim; i++) {
+        if ((i >> target) & 1) {
+            long long j = i ^ (1LL << target);
+            double complex temp_i = state->amplitudes[i];
+            double complex temp_j = state->amplitudes[j];
+            state->amplitudes[i] = gate[0][0] * temp_j + gate[0][1] * temp_i;
+            state->amplitudes[j] = gate[1][0] * temp_j + gate[1][1] * temp_i;
+        }
+    }
+}
+```
