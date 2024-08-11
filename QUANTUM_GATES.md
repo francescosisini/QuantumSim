@@ -99,15 +99,33 @@ Implementazione in QuantumSim:
 
 void applyCNOT(QubitState *state, int control, int target) {
     long long dim = 1LL << state->numQubits;
+    double complex new_amplitudes[dim];
+
+    // Copia le ampiezze originali nel nuovo array
     for (long long i = 0; i < dim; i++) {
-        if ((i >> control) & 1) {
-            long long j = i ^ (1LL << target);
-            double complex temp = state->amplitudes[i];
-            state->amplitudes[i] = state->amplitudes[j];
-            state->amplitudes[j] = temp;
+        new_amplitudes[i] = state->amplitudes[i];
+    }
+
+    // Applica il gate CNOT con il controllo e il target numerati da sinistra a destra
+    for (long long i = 0; i < dim; i++) {
+        // Calcola il bit di controllo e il bit target correttamente orientati
+        int control_bit = (i >> (state->numQubits - 1 - control)) & 1;
+        int target_bit = (i >> (state->numQubits - 1 - target)) & 1;
+
+        if (control_bit == 1) {
+            long long j = i ^ (1LL << (state->numQubits - 1 - target)); // Inverti solo il bit target
+            new_amplitudes[i] = state->amplitudes[j];
+            new_amplitudes[j] = state->amplitudes[i];
         }
     }
+
+    // Aggiorna le ampiezze nello stato originale
+    for (long long i = 0; i < dim; i++) {
+        state->amplitudes[i] = new_amplitudes[i];
+    }
 }
+
+
 ```
 Questa funzione verifica se il qubit di controllo è nello stato ∣1⟩ (mediante la condizione if ((i >> control) & 1)). Se sì, inverte lo stato del qubit target, scambiando le ampiezze degli stati base corrispondenti.
 Funzione applySingleQubitGate
