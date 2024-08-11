@@ -1,7 +1,9 @@
-# Stato Computazionale di un Sistema di nn Qubit
+# Stato Computazionale di un Sistema di n Qubit
 
 In un sistema quantistico, un qubit può trovarsi in uno stato ∣0⟩,∣1⟩, o in una sovrapposizione di questi due stati. 
 Quando si considera un sistema composto da nn qubit, lo stato dell'intero sistema può essere descritto come una combinazione lineare di tutti gli stati possibili dei singoli qubit.
+
+Nella libreria, uno stato quantistico è rappresentato come un oggetto ```QubitState```. Questo oggetto contiene informazioni sul numero di qubit e sulle loro ampiezze complesse, che rappresentano lo stato del sistema quantistico.
 
 ## Dimensione dello Spazio di Stato
 
@@ -21,7 +23,6 @@ Ogni stato del sistema è un vettore con $2^n$ componenti, dove ciascuna compone
 Ad esempio, per n=2 qubit, il vettore di stato generale è:
 
 ∣ψ⟩=α0∣00⟩+α1∣01⟩+α2∣10⟩+α3∣11⟩
-∣ψ⟩=α0​∣00⟩+α1​∣01⟩+α2​∣10⟩+α3​∣11⟩
 
 dove α0,α1,α2,α3 sono numeri complessi.
 ## Implicazioni nella Simulazione
@@ -29,3 +30,48 @@ dove α0,α1,α2,α3 sono numeri complessi.
 Nella simulazione, questo significa che per rappresentare lo stato di nn qubit, è necessario un array di dimensione $2^n$.
 Ogni elemento di questo array rappresenta l'ampiezza di probabilità per uno degli $2^n$ stati base. 
 Questo spiega perché, nel codice, la dimensione dell'array amplitudes è calcolata come 1<<numQubits, ovvero $2^numQubits$.
+
+## Creazione di uno Stato nella Libreria
+
+In C, la struttura QubitState è definita come segue:
+
+```
+
+typedef struct {
+    int numQubits;
+    double complex *amplitudes;
+} QubitState;
+```
+    ```numQubits``` rappresenta il numero di qubit nel sistema.
+    ```amplitudes``` è un array di numeri complessi che contiene le ampiezze per ogni stato base.
+
+## Inizializzazione di uno Stato
+
+La funzione initializeState è responsabile della creazione e inizializzazione dello stato quantistico nel nostro simulatore:
+
+```
+
+QubitState* initializeState(int numQubits) {
+    QubitState *state = (QubitState *)malloc(sizeof(QubitState));
+    state->numQubits = numQubits;
+    long long dim = 1LL << numQubits; // 2^numQubits
+    state->amplitudes = (double complex *)calloc(dim, sizeof(double complex));
+    state->amplitudes[0] = 1.0 + 0.0 * I; // Stato iniziale |00...0>
+    return state;
+}
+```
+
+    Allocazione della Memoria: Viene allocata memoria per l'oggetto QubitState e per l'array di ampiezze complesse.
+    Dimensione dello Spazio di Hilbert: La dimensione dello spazio di Hilbert è calcolata come 2numQubits2numQubits.
+    Inizializzazione dello Stato: L'array di ampiezze viene inizializzato con zeri, eccetto la componente corrispondente allo stato ∣00…0⟩ che viene impostata a 1.0 (cioè, lo stato ∣00…0⟩ è lo stato iniziale del sistema).
+
+Questo corrisponde a mettere il sistema in un singolo stato base iniziale (generalmente ∣00…0⟩∣00…0⟩), che rappresenta lo stato fondamentale del sistema quantistico.
+## Esempio Pratico: Stato di un Singolo Qubit
+
+Per un singolo qubit, lo stato quantistico può essere rappresentato da un vettore a due componenti, ad esempio ∣ψ⟩=α0∣0⟩+α1∣1⟩. Dopo l'inizializzazione con ```initializeState(1)```, il sistema si troverà nello stato ∣0⟩ con α0=1.0 e α1=0.0.
+## Concetto di Misura e Collasso dello Stato
+
+Quando misuriamo un qubit, il suo stato collassa in uno degli stati base con una probabilità proporzionale al quadrato del modulo dell'ampiezza corrispondente.
+Nella libreria, la funzione measure_all simula questo collasso per tutti i qubit.
+
+
