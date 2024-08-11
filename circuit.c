@@ -1,33 +1,36 @@
 #include "quantum_sim.h"
 #include <stdio.h>
+#include <stdlib.h>
+#include <complex.h>
+#include <math.h>
+
 
 void circuit() {
-    int numQubits = 2;
+    int numQubits = 3;
+    int qb = 0;
+    // Testare X con input |00>
     QubitState *state = initializeState(numQubits);
+    long long dim = 1LL << state->numQubits;
+    for(int i=0;i<dim;i++)
+      {
+	initializeStateTo(state, i);
+	printf("Indice: %d \n", i);
+	printState(state);
+	printf("Applico X al qubit %d \n",qb);
+	applyX(state,qb);
+	printState(state);
+      }
 
-    // Stato iniziale: |00>
-    printf("Stato iniziale:\n");
-    for (int i = 0; i < (1 << numQubits); i++) {
-        printf("Stato %d: %f + %fi\n", i, creal(state->amplitudes[i]), cimag(state->amplitudes[i]));
+    printf("\n TEST CNOT \n");
+    if(numQubits<2) exit(0);
+    for(int i=0;i<dim;i++)
+      {
+	initializeStateTo(state, i);
+	printf("Indice: %d \n", i);
+	printState(state);
+	printf("Applico CNOT: control 1, target %d \n",qb);
+	applyCNOT(state,1,qb);
+	printState(state);
+      }
+    
     }
-
-    // Applicare X al qubit di controllo per portarlo nello stato |10>
-    applyX(state, 0);
-
-    // Stato dopo X
-    printf("Stato dopo X:\n");
-    for (int i = 0; i < (1 << numQubits); i++) {
-        printf("Stato %d: %f + %fi\n", i, creal(state->amplitudes[i]), cimag(state->amplitudes[i]));
-    }
-
-    // Applicare CNOT con controllo su qubit 0 e target su qubit 1
-    applyCNOT(state, 0, 1);
-
-    // Stato dopo CNOT
-    printf("Stato dopo CNOT:\n");
-    for (int i = 0; i < (1 << numQubits); i++) {
-        printf("Stato %d: %f + %fi\n", i, creal(state->amplitudes[i]), cimag(state->amplitudes[i]));
-    }
-
-    freeState(state);
-}

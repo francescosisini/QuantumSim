@@ -5,14 +5,58 @@
 #include <complex.h>
 #include <time.h>
 
+/**
+ * Inizializza lo stato quantistico a uno stato di base specifico.
+ *
+ * Questa funzione prende in input un puntatore a una struttura `QubitState`, che rappresenta
+ * lo stato di un sistema quantistico, e un indice `index` che indica quale stato di base 
+ * il sistema dovrebbe assumere. La funzione imposta tutte le ampiezze degli stati quantistici 
+ * a zero, eccetto quella corrispondente all'indice specificato, che viene impostata a 1.0, 
+ * rappresentando così lo stato di base desiderato.
+ *
+ * @param state Un puntatore a una struttura `QubitState` che contiene il numero di qubit 
+ *              e il vettore delle ampiezze da inizializzare.
+ * @param index L'indice dello stato di base desiderato, che va da 0 a 2^numQubits - 1.
+ *
+ * Dettagli:
+ * - `dim` rappresenta la dimensione dello spazio di Hilbert, pari a 2^numQubits.
+ * - Tutti gli elementi di `state->amplitudes` vengono inizializzati a 0.0.
+ * - L'elemento corrispondente all'indice specificato viene impostato a 1.0 + 0.0 * I, 
+ *   indicando che il sistema è nello stato di base associato a quell'indice.
+ */
+void initializeStateTo(QubitState *state, int index) {
+    long long dim = 1LL << state->numQubits;
+    for (long long i = 0; i < dim; i++) {
+        state->amplitudes[i] = 0.0 + 0.0 * I;
+    }
+    state->amplitudes[index] = 1.0 + 0.0 * I;  // Imposta l'ampiezza dello stato indicato a 1
+}
+
+void printState(QubitState *state) {
+    long long dim = 1LL << state->numQubits;
+    for (long long i = 0; i < dim; i++) {
+        printf("Stato %lld: %f + %fi\n", i, creal(state->amplitudes[i]), cimag(state->amplitudes[i]));
+    }
+}
+
+
 QubitState* initializeState(int numQubits) {
     QubitState *state = (QubitState *)malloc(sizeof(QubitState));
     state->numQubits = numQubits;
     long long dim = 1LL << numQubits; // 2^numQubits
     state->amplitudes = (double complex *)calloc(dim, sizeof(double complex));
-    state->amplitudes[0] = 1.0 + 0.0 * I; // |0>^N state
+
+    // Verifica che tutte le ampiezze siano inizializzate a 0
+    for (long long i = 0; i < dim; i++) {
+        state->amplitudes[i] = 0.0 + 0.0 * I;
+    }
+
+    // Imposta lo stato |0>^N
+    state->amplitudes[0] = 1.0 + 0.0 * I; 
+
     return state;
 }
+
 
 void freeState(QubitState *state) {
     free(state->amplitudes);
@@ -21,16 +65,31 @@ void freeState(QubitState *state) {
 
 void applySingleQubitGate(QubitState *state, int target, double complex gate[2][2]) {
     long long dim = 1LL << state->numQubits;
+    double complex new_amplitudes[dim];
+
+    // Copia le ampiezze originali nel nuovo array
     for (long long i = 0; i < dim; i++) {
-        if ((i >> target) & 1) {
-            long long j = i ^ (1LL << target);
-            double complex temp_i = state->amplitudes[i];
-            double complex temp_j = state->amplitudes[j];
-            state->amplitudes[i] = gate[0][0] * temp_j + gate[0][1] * temp_i;
-            state->amplitudes[j] = gate[1][0] * temp_j + gate[1][1] * temp_i;
+        new_amplitudes[i] = state->amplitudes[i];
+    }
+
+    // Applica il gate al qubit target numerato da sinistra
+    for (long long i = 0; i < dim; i++) {
+        int bitValue = (i >> (state->numQubits - 1 - target)) & 1; // Determina se il bit target è 0 o 1
+        long long j = i ^ (1LL << (state->numQubits - 1 - target)); // Calcola l'indice con il bit target invertito
+
+        // Scambia le ampiezze se necessario
+        if (bitValue == 1) {
+            new_amplitudes[i] = gate[1][0] * state->amplitudes[j] + gate[1][1] * state->amplitudes[i];
+            new_amplitudes[j] = gate[0][0] * state->amplitudes[j] + gate[0][1] * state->amplitudes[i];
         }
     }
+
+    // Aggiorna le ampiezze nello stato originale
+    for (long long i = 0; i < dim; i++) {
+        state->amplitudes[i] = new_amplitudes[i];
+    }
 }
+
 
 void applyHadamard(QubitState *state, int target) {
     double complex H[2][2] = {
@@ -42,17 +101,11 @@ void applyHadamard(QubitState *state, int target) {
 
 
 void applyX(QubitState *state, int target) {
-    long long dim = 1LL << state->numQubits;
-    for (long long i = 0; i < dim; i++) {
-        // Controlla se il target qubit è 1
-        if ((i >> target) & 1) {
-            // Scambia le ampiezze di i e j
-            long long j = i ^ (1LL << target);
-            double complex temp = state->amplitudes[i];
-            state->amplitudes[i] = state->amplitudes[j];
-            state->amplitudes[j] = temp;
-        }
-    }
+double complex X[2][2] = {
+        {0, 1},
+        {1, 0}
+    };
+    applySingleQubitGate(state, target, X);
 }
 
 
@@ -65,24 +118,33 @@ void applyZ(QubitState *state, int target) {
     applySingleQubitGate(state, target, Z);
 }
 
-
-
 void applyCNOT(QubitState *state, int control, int target) {
     long long dim = 1LL << state->numQubits;
+    double complex new_amplitudes[dim];
+
+    // Copia le ampiezze originali nel nuovo array
     for (long long i = 0; i < dim; i++) {
-        // Se il bit del qubit di controllo è 1
-        if ((i >> control) & 1) {
-            // Calcola l'indice con il bit del qubit target invertito
-            long long j = i ^ (1LL << target);
-            // Scambia le ampiezze tra lo stato i e lo stato j
-            double complex temp = state->amplitudes[j];
-            state->amplitudes[j] = state->amplitudes[i];
-            state->amplitudes[i] = temp;
+        new_amplitudes[i] = state->amplitudes[i];
+    }
+
+    // Applica il gate CNOT con il controllo e il target numerati da sinistra a destra
+    for (long long i = 0; i < dim; i++) {
+        // Calcola il bit di controllo e il bit target correttamente orientati
+        int control_bit = (i >> (state->numQubits - 1 - control)) & 1;
+        int target_bit = (i >> (state->numQubits - 1 - target)) & 1;
+
+        if (control_bit == 1) {
+            long long j = i ^ (1LL << (state->numQubits - 1 - target)); // Inverti solo il bit target
+            new_amplitudes[i] = state->amplitudes[j];
+            new_amplitudes[j] = state->amplitudes[i];
         }
     }
+
+    // Aggiorna le ampiezze nello stato originale
+    for (long long i = 0; i < dim; i++) {
+        state->amplitudes[i] = new_amplitudes[i];
+    }
 }
-
-
 
 
 

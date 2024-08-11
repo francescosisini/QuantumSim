@@ -9,8 +9,9 @@ typedef struct {
 } QubitState;
 
 QubitState* initializeState(int numQubits);
+void initializeStateTo(QubitState *state, int index);
 void freeState(QubitState *state);
-
+void printState(QubitState *state);
 void applyHadamard(QubitState *state, int target);
 void applyX(QubitState *state, int target);
 void applyZ(QubitState *state, int target);
