@@ -146,60 +146,35 @@ void applyCNOT(QubitState *state, int control, int target) {
     }
 }
 
-
-
 int* measure_all(QubitState *state) {
-    long long dim = 1LL << state->numQubits;
-    double *probabilities = (double *)malloc(dim * sizeof(double));
-    if (probabilities == NULL) {
-        printf("Errore nell'allocazione della memoria per le probabilità.\n");
-        exit(1);
-    }
-    double totalProbability = 0.0;
+    long long dim = 1LL << state->numQubits;  // Dimensione dello spazio di Hilbert: 2^numQubits
+    double cumulativeProb = 0.0;  // Probabilità cumulativa inizializzata a 0
+    double randNum = (double)rand() / RAND_MAX;  // Numero casuale tra 0 e 1
+    long long collapse_index = -1;  // Indice dello stato in cui il sistema collasserà
 
-    // Calcolare le probabilità di ciascuno stato base
+    // Calcolo della distribuzione cumulativa delle probabilità
     for (long long i = 0; i < dim; i++) {
-        probabilities[i] = pow(cabs(state->amplitudes[i]), 2);
-        totalProbability += probabilities[i];
-    }
-
-    // Normalizzare le probabilità
-    for (long long i = 0; i < dim; i++) {
-        probabilities[i] /= totalProbability;
-    }
-
-    // Generare un numero casuale per determinare il risultato della misura
-    double randValue = (double)rand() / RAND_MAX;
-    double cumulativeProbability = 0.0;
-    int result = 0;
-    for (long long i = 0; i < dim; i++) {
-        cumulativeProbability += probabilities[i];
-        if (randValue < cumulativeProbability) {
-            result = i;
-            break;
+        cumulativeProb += pow(cabs(state->amplitudes[i]), 2);  // Somma delle probabilità
+        if (randNum < cumulativeProb) {  // Trova lo stato in cui il sistema collassa
+            collapse_index = i;  // Imposta l'indice del collasso
+            break;  // Esce dal ciclo una volta trovato lo stato corrispondente
         }
     }
 
-    // Collassare lo stato quantistico nel risultato della misura
-    for (long long i = 0; i < dim; i++) {
-        if (i == result) {
-            state->amplitudes[i] = 1.0 + 0.0 * I;
-        } else {
-            state->amplitudes[i] = 0.0 + 0.0 * I;
-        }
-    }
-
-    free(probabilities);
-
-    // Creare un array per memorizzare i risultati della misura di ciascun qubit
-    int *results = (int *)malloc(state->numQubits * sizeof(int));
-    if (results == NULL) {
-        printf("Errore nell'allocazione della memoria per i risultati.\n");
-        exit(1);
-    }
+    // Risultato della misura: array contenente i valori di ciascun qubit
+    int* results = (int*)malloc(state->numQubits * sizeof(int));  // Alloca memoria per il risultato
     for (int i = 0; i < state->numQubits; i++) {
-        results[i] = (result >> i) & 1;
+        results[i] = (collapse_index >> (state->numQubits - i - 1)) & 1;  // Estrae il valore di ciascun qubit
     }
 
-    return results;
+    // Far collassare lo stato del sistema
+    for (long long j = 0; j < dim; j++) {
+        if (j == collapse_index) {
+            state->amplitudes[j] = 1.0 + 0.0 * I;  // Lo stato collassa nello stato base corrispondente
+        } else {
+            state->amplitudes[j] = 0.0 + 0.0 * I;  // Tutti gli altri stati vengono azzerati
+        }
+    }
+
+    return results;  // Restituisce l'array dei risultati della misura
 }
