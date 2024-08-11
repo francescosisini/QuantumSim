@@ -56,14 +56,21 @@ QubitState* initializeState(int numQubits) {
     state->numQubits = numQubits;
     long long dim = 1LL << numQubits; // 2^numQubits
     state->amplitudes = (double complex *)calloc(dim, sizeof(double complex));
-    state->amplitudes[0] = 1.0 + 0.0 * I; // Stato iniziale |00...0>
+
+    // Verifica che tutte le ampiezze siano inizializzate a 0
+    for (long long i = 0; i < dim; i++) {
+        state->amplitudes[i] = 0.0 + 0.0 * I;
+    }
+
+    // Imposta lo stato |0>^N
+    state->amplitudes[0] = 1.0 + 0.0 * I; 
+
     return state;
 }
 ```
-
-    Allocazione della Memoria: Viene allocata memoria per l'oggetto QubitState e per l'array di ampiezze complesse.
-    Dimensione dello Spazio di Hilbert: La dimensione dello spazio di Hilbert è calcolata come 2numQubits2numQubits.
-    Inizializzazione dello Stato: L'array di ampiezze viene inizializzato con zeri, eccetto la componente corrispondente allo stato ∣00…0⟩ che viene impostata a 1.0 (cioè, lo stato ∣00…0⟩ è lo stato iniziale del sistema).
+Allocazione della Memoria: Viene allocata memoria per l'oggetto QubitState e per l'array di ampiezze complesse.
+Dimensione dello Spazio di Hilbert: La dimensione dello spazio di Hilbert è calcolata come 2numQubits2numQubits.
+Inizializzazione dello Stato: L'array di ampiezze viene inizializzato con zeri, eccetto la componente corrispondente allo stato ∣00…0⟩ che viene impostata a 1.0 (cioè, lo stato ∣00…0⟩ è lo stato iniziale del sistema).
 
 Questo corrisponde a mettere il sistema in un singolo stato base iniziale (generalmente ∣00…0⟩∣00…0⟩), che rappresenta lo stato fondamentale del sistema quantistico.
 ## Esempio Pratico: Stato di un Singolo Qubit
