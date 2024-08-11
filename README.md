@@ -9,6 +9,17 @@ Questo simulatore consente di inizializzare stati quantistici, applicare gate qu
    - Applicazione dei gate Hadamard, Pauli-X, Pauli-Z e CNOT.
    - Misurazione dello stato quantistico e collasso in uno stato base.
    - Print di debug per tracciare il flusso di esecuzione.
+
+## Documentazione di Supporto
+
+Per una spiegazione dettagliata su come vengono rappresentati e inizializzati gli stati quantistici nel simulatore, consulta la [Documentazione sugli Stati Quantistici](QUANTUM_STATES.md).
+
+Questo documento copre:
+
+- La base teorica degli stati quantistici.
+- La rappresentazione matematica degli stati con \( n \) qubit.
+- La relazione tra concetti fisici e implementazione nel codice.
+
   
 ## Documentazione Aggiuntiva
 
