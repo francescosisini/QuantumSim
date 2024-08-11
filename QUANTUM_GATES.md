@@ -137,14 +137,29 @@ Le porte Hadamard, X e Z sono tutte implementate usando una funzione generica ap
 ```
 void applySingleQubitGate(QubitState *state, int target, double complex gate[2][2]) {
     long long dim = 1LL << state->numQubits;
+    double complex new_amplitudes[dim];
+
+    // Copia le ampiezze originali nel nuovo array
     for (long long i = 0; i < dim; i++) {
-        if ((i >> target) & 1) {
-            long long j = i ^ (1LL << target);
-            double complex temp_i = state->amplitudes[i];
-            double complex temp_j = state->amplitudes[j];
-            state->amplitudes[i] = gate[0][0] * temp_j + gate[0][1] * temp_i;
-            state->amplitudes[j] = gate[1][0] * temp_j + gate[1][1] * temp_i;
+        new_amplitudes[i] = state->amplitudes[i];
+    }
+
+    // Applica il gate al qubit target numerato da sinistra
+    for (long long i = 0; i < dim; i++) {
+        int bitValue = (i >> (state->numQubits - 1 - target)) & 1; // Determina se il bit target è 0 o 1
+        long long j = i ^ (1LL << (state->numQubits - 1 - target)); // Calcola l'indice con il bit target invertito
+
+        // Scambia le ampiezze se necessario
+        if (bitValue == 1) {
+            new_amplitudes[i] = gate[1][0] * state->amplitudes[j] + gate[1][1] * state->amplitudes[i];
+            new_amplitudes[j] = gate[0][0] * state->amplitudes[j] + gate[0][1] * state->amplitudes[i];
         }
     }
+
+    // Aggiorna le ampiezze nello stato originale
+    for (long long i = 0; i < dim; i++) {
+        state->amplitudes[i] = new_amplitudes[i];
+    }
 }
+
 ```
