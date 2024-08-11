@@ -77,67 +77,111 @@ Ecco un esempio di come viene definito ed eseguito il circuito quantistico:
 ```
 #include "quantum_sim.h"
 #include <stdio.h>
+#include <stdlib.h>
+#include <complex.h>
+#include <math.h>
+
 
 void circuit() {
-    int numQubits = 2; // Definisci il numero di qubits
-    QubitState *state = initializeState(numQubits); // Inizializza lo stato quantistico
+    // Test su 1 qubit
+    printf("Test su 1 qubit:\n");
+    int numQubits = 1;
+    QubitState *state = initializeState(numQubits);
 
-    printf("Stato quantistico inizializzato.\n");
+    // Caso 1: Stato iniziale |0>
+    printf("\nCaso 1: Stato iniziale |0>\n");
+    printState(state);
 
-    // Applicare Hadamard a tutti i qubits
-    for (int i = 0; i < numQubits; i++) {
-        applyHadamard(state, i);
-    }
+    // Caso 2: Applico X a |0>
+    applyX(state, 0);
+    printf("Caso 2: Stato dopo X:\n");
+    printState(state);
 
-    printf("Hadamard applicato a tutti i qubits.\n");
+    // Caso 3: Applico Hadamard a |0>
+    applyHadamard(state, 0);
+    printf("Caso 3: Stato dopo Hadamard:\n");
+    printState(state);
 
-    // Supponiamo che l'elemento marcato sia lo stato |11>
-    // Applicare l'oracolo di Grover
-    applyCNOT(state, 0, 1);  // Controllo il primo qubit, target il secondo qubit
-    applyX(state, 0);  // Applico X gate al primo qubit
-    applyCNOT(state, 0, 1);  // Controllo il primo qubit, target il secondo qubit
-    applyX(state, 0);  // Applico X gate al primo qubit
+    // Caso 4: Applico Z a |0>
+    applyZ(state, 0);
+    printf("Caso 4: Stato dopo Z:\n");
+    printState(state);
 
-    printf("Oracolo di Grover applicato.\n");
+    // Pulizia della memoria per 1 qubit
+    freeState(state);
 
-    // Applicare la diffusione di Grover
-    // Applicare Hadamard a tutti i qubits
-    for (int i = 0; i < numQubits; i++) {
-        applyHadamard(state, i);
-    }
+    // Test su 2 qubit
+    printf("\nTest su 2 qubit:\n");
+    numQubits = 2;
+    state = initializeState(numQubits);
 
-    // Applicare X a tutti i qubits
-    for (int i = 0; i < numQubits; i++) {
-        applyX(state, i);
-    }
+    // Caso 1: Stato iniziale |00>
+    printf("\nCaso 1: Stato iniziale |00>\n");
+    printState(state);
 
-    // Applicare una porta multi-controlled-Z (in questo caso, controllato su due qubits)
+    // Caso 2: Applico X al primo qubit |10>
+    applyX(state, 0);
+    printf("Caso 2: Stato dopo X su qubit 0:\n");
+    printState(state);
+
+    // Caso 3: Applico X al secondo qubit |11>
+    applyX(state, 1);
+    printf("Caso 3: Stato dopo X su qubit 1:\n");
+    printState(state);
+
+    // Caso 4: Applico Hadamard al primo qubit
+    applyHadamard(state, 0);
+    printf("Caso 4: Stato dopo Hadamard su qubit 0:\n");
+    printState(state);
+
+    // Caso 5: Applico CNOT con il primo qubit come controllo e il secondo come target
     applyCNOT(state, 0, 1);
-    applyZ(state, 1);
+    printf("Caso 5: Stato dopo CNOT (qubit 0 come controllo e qubit 1 come target):\n");
+    printState(state);
+
+    // Pulizia della memoria per 2 qubit
+    freeState(state);
+
+    // Test su 3 qubit
+    printf("\nTest su 3 qubit:\n");
+    numQubits = 3;
+    state = initializeState(numQubits);
+
+    // Caso 1: Stato iniziale |000>
+    printf("\nCaso 1: Stato iniziale |000>\n");
+    printState(state);
+
+    // Caso 2: Applico X al primo qubit |100>
+    applyX(state, 0);
+    printf("Caso 2: Stato dopo X su qubit 0:\n");
+    printState(state);
+
+    // Caso 3: Applico X al terzo qubit |101>
+    applyX(state, 2);
+    printf("Caso 3: Stato dopo X su qubit 2:\n");
+    printState(state);
+
+    // Caso 4: Stato di Bell |000> + |111>
+    initializeStateTo(state, 0);
+    applyHadamard(state, 0);
     applyCNOT(state, 0, 1);
+    applyCNOT(state, 0, 2);
+    printf("Caso 4: Stato di Bell |000> + |111>\n");
+    printState(state);
 
-    // Applicare X a tutti i qubits
-    for (int i = 0; i < numQubits; i++) {
-        applyX(state, i);
-    }
-
-    // Applicare Hadamard a tutti i qubits
-    for (int i = 0; i < numQubits; i++) {
-        applyHadamard(state, i);
-    }
-
-    printf("Diffusione di Grover applicata.\n");
-
-    // Misurare lo stato finale
-    int *results = measure_all(state);
-    printf("Risultato della misura:\n");
+    // Misura finale dello stato di Bell
+    int* results = measure_all(state);
+    printf("Risultato della misura dello stato di Bell:\n");
     for (int i = 0; i < numQubits; i++) {
         printf("Qubit %d: %d\n", i, results[i]);
     }
 
+    // Pulizia della memoria per 3 qubit
     free(results);
-    freeState(state); // Libera la memoria dello stato quantistico
-
-    printf("Memoria liberata.\n");
+    freeState(state);
 }
+
 ```
+## Disclaimer
+
+Questo progetto è stato creato con finalità didattiche e divulgative. Sebbene sia stato sviluppato con cura, potrebbero esserci errori o imprecisioni. Per maggiori dettagli, consulta il [Disclaimer completo](DISCLAIMER.md).
