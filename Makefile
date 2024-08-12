@@ -1,36 +1,29 @@
-# Nome dell'eseguibile
-TARGET = QuantumSim
+CC=gcc
+CFLAGS=-Wall -Wextra -std=c99
 
-# Compiler
-CC = gcc
+# Directory dei file sorgente
+SRC_DIR=src
+PARSER_DIR=qasm_to_c
 
-# Opzioni di compilazione
-CFLAGS = -Wall -lm
+# File sorgente per il simulatore
+SRC=$(SRC_DIR)/quantum_sim.c $(SRC_DIR)/circuit.c $(SRC_DIR)/main.c
 
-# File sorgenti
-SRCS = main.c quantum_sim.c circuit.c
+# Nome dell'eseguibile del simulatore
+TARGET=QuantumSim
 
-# File oggetto generati
-OBJS = $(SRCS:.c=.o)
+# File sorgente per il parser QASM
+PARSER_SRC=$(PARSER_DIR)/qasm_parser.c
 
-# Regola principale
-all: $(TARGET)
+# Nome dell'eseguibile del parser QASM
+PARSER_TARGET=QasmParser
 
-# Regola per creare l'eseguibile
-$(TARGET): $(OBJS)
-	$(CC) -o $@ $^ $(CFLAGS)
+all: $(TARGET) $(PARSER_TARGET)
 
-# Regola per creare file oggetto
-%.o: %.c
-	$(CC) -c $< $(CFLAGS)
+$(TARGET): $(SRC)
+	$(CC) $(CFLAGS) -o $(TARGET) $(SRC) -lm
 
-# Pulizia dei file oggetto e dell'eseguibile
+$(PARSER_TARGET): $(PARSER_SRC)
+	$(CC) $(CFLAGS) -o $(PARSER_TARGET) $(PARSER_SRC) -lm
+
 clean:
-	rm -f $(OBJS) $(TARGET)
-
-# Esecuzione del programma
-run: $(TARGET)
-	./$(TARGET)
-
-# Phony targets
-.PHONY: all clean run
+	rm -f $(TARGET) $(PARSER_TARGET)
