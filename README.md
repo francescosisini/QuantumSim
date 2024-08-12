@@ -39,17 +39,17 @@ Questo documento copre:
 ```
 
 QuantumSim/
-├── src/                    # Codice sorgente principale del simulatore quantistico
-│   ├── quantum_sim.h       # Header file per la libreria del simulatore
-│   ├── quantum_sim.c       # Implementazione delle funzioni del simulatore
-│   ├── circuit.c           # File di esempio con circuiti quantistici
-│   └── main.c              # Main file per eseguire il simulatore
-├── qasm_to_c/              # Parser e strumenti di conversione da QASM a C
-│   └── qasm_parser.c       # Codice per convertire file QASM in file C
-├── examples/               # Esempi di file QASM
-│   └── example.qasm        # Un esempio di file QASM da convertire
-├── Makefile                # Makefile per costruire il progetto
-└── README.md               # Documentazione del progetto
+├── src/                           # Directory principale dei file sorgente
+│   ├── quantum_sim.c              # Implementazione del simulatore quantistico
+│   ├── circuit.c                  # Implementazione del circuito quantistico
+│   ├── main.c                     # Punto di ingresso principale del simulatore
+│   ├── qasm_to_c/                 # Directory contenente il parser da QASM a C
+│   │   └── qasm_parser.c          # Codice sorgente per il parser QASM-to-C
+│   └── c_to_qasm/                 # Directory contenente il parser da C a QASM
+│       └── c_to_qasm.c            # Codice sorgente per il parser C-to-QASM
+├── Makefile                       # Makefile per la compilazione del progetto
+├── README.md                      # Documentazione del progetto
+└── LICENSE                        # Licenza del progetto
 
 ```
 ## Requisiti
