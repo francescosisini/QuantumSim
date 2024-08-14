@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-void generateCFile(const char *outputFilename, int numQubits) {
+void generateCFile(const char *outputFilename, int numQubits, int numCbits) {
     FILE *outputFile = fopen(outputFilename, "w");
     if (outputFile == NULL) {
         perror("Errore nella creazione del file C");
@@ -13,7 +13,9 @@ void generateCFile(const char *outputFilename, int numQubits) {
     fprintf(outputFile, "#include <stdio.h>\n\n");
     fprintf(outputFile, "void circuit() {\n");
     fprintf(outputFile, "    int numQubits = %d;\n", numQubits); // Definisce il numero di qubits
-    fprintf(outputFile, "    QubitState *state = initializeState(numQubits);\n\n");
+    fprintf(outputFile, "    QubitState *state = initializeState(numQubits);\n");
+    fprintf(outputFile, "    int q[%d]; // Array dei qubits\n", numQubits);
+    fprintf(outputFile, "    int c[%d]; // Array dei bit classici\n\n", numCbits);
 
     fclose(outputFile);
 }
@@ -39,14 +41,15 @@ void parseQASM(const char *filename, const char *outputFilename) {
         exit(EXIT_FAILURE);
     }
 
-    int numQubits = 0;
+    int numQubits = 0, numCbits = 0;
     char line[256];
 
-    // Prima passata: Trova il numero di qubit
+    // Prima passata: Trova il numero di qubit e bit classici
     while (fgets(line, sizeof(line), file)) {
         if (strstr(line, "qreg")) {
             sscanf(line, "qreg q[%d];", &numQubits);
-            break;
+        } else if (strstr(line, "creg")) {
+            sscanf(line, "creg c[%d];", &numCbits);
         }
     }
 
@@ -56,8 +59,14 @@ void parseQASM(const char *filename, const char *outputFilename) {
         exit(EXIT_FAILURE);
     }
 
-    // Crea il file C con il numero di qubits trovato
-    generateCFile(outputFilename, numQubits);
+    if (numCbits == 0) {
+        fprintf(stderr, "Errore: creg non trovato o numero di bit classici non valido.\n");
+        fclose(file);
+        exit(EXIT_FAILURE);
+    }
+
+    // Crea il file C con il numero di qubits e bit classici trovato
+    generateCFile(outputFilename, numQubits, numCbits);
 
     // Seconda passata: Analizza le istruzioni e le aggiunge al file C
     rewind(file); // Riavvolge il file per la seconda passata
@@ -73,7 +82,7 @@ void parseQASM(const char *filename, const char *outputFilename) {
             fprintf(outputFile, "    applyHadamard(state, %d);\n", qubit);
         } else if (strstr(line, "cx ")) {
             int control, target;
-            sscanf(line, "cx q[%d],q[%d];", &control, &target);
+            sscanf(line, "cx q%d,q%d;", &control, &target);
             fprintf(outputFile, "    applyCNOT(state, %d, %d);\n", control, target);
         } else if (strstr(line, "x ")) {
             int qubit;
@@ -84,6 +93,7 @@ void parseQASM(const char *filename, const char *outputFilename) {
             sscanf(line, "measure q[%d] -> c[%d];", &qubit, &cbit);
             fprintf(outputFile, "    int result = measure(state, %d);\n", qubit);
             fprintf(outputFile, "    c[%d] = result;\n", cbit);
+	    fprintf(outputFile, "    printf(\"c[%d]=%%d\\n\",result);\n", cbit);
         } else {
             fprintf(outputFile, "    // Istruzione non riconosciuta: %s", line);
         }
