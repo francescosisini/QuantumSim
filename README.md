@@ -68,12 +68,44 @@ cd QuantumSim
 
 ## Compilazione
 
-usando il Makefile del progetto
-```sh
+### Utilizzo del Makefile per QuantumSim
+
+Il Makefile di ```QuantumSim``` è stato aggiornato per facilitare la compilazione e l'esecuzione di circuiti quantistici definiti in file C.
+Ora è possibile specificare un file di circuito personalizzato da compilare direttamente tramite il Makefile.
+
+#### Opzioni Disponibili
+
+- CIRCUIT_FILE: Nome del file contenente il circuito quantistico in C che si desidera compilare. Se non viene specificato, verrà utilizzato il file predefinito src/circuit.c.
+
+##### Comandi del Makefile
+
+    Compilare QuantumSim con un circuito predefinito:
+
+```
 make
 ```
-Questo genererà un eseguibile chiamato QuantumSim.
+Questo comando utilizzerà il file src/circuit.c come circuito predefinito e compilerà l'eseguibile QuantumSim.
 
+##### Compilare QuantumSim con un file di circuito personalizzato:
+```
+make CIRCUIT_FILE=src/my_custom_circuit.c
+```
+
+##### Questo comando compila QuantumSim utilizzando il file src/my_custom_circuit.c come sorgente per il circuito.
+
+Pulire gli eseguibili compilati:
+```
+    make clean
+```
+    Questo comando rimuove gli eseguibili generati (QuantumSim, QasmParser, CtoQasm).
+
+##### Esempio
+
+Supponiamo di avere un circuito personalizzato definito nel file src/custom_circuit.c. Per compilare e eseguire QuantumSim con questo circuito, eseguire:
+```
+make CIRCUIT_FILE=src/custom_circuit.c
+./QuantumSim
+```
 ## Uso
 
 Utilizzo
