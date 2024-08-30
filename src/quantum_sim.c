@@ -23,6 +23,11 @@
 #include <complex.h>
 #include <time.h>
 
+#ifndef M_PI
+    #define M_PI 3.14159265358979323846
+#endif
+
+
 /**
  * Inizializza lo stato quantistico a uno stato di base specifico.
  *
@@ -136,6 +141,23 @@ void applyZ(QubitState *state, int target) {
     applySingleQubitGate(state, target, Z);
 }
 
+void applyT(QubitState *state, int target) {
+    double complex T[2][2] = {
+        {1, 0},
+        {0, cexp(I * M_PI / 4.0)}
+    };
+    applySingleQubitGate(state, target, T);
+}
+
+void applyS(QubitState *state, int target) {
+    double complex S[2][2] = {
+        {1, 0},
+        {0, I}
+    };
+    applySingleQubitGate(state, target, S);
+}
+
+
 void applyCNOT(QubitState *state, int control, int target) {
     long long dim = 1LL << state->numQubits;
     double complex new_amplitudes[dim];
@@ -164,9 +186,7 @@ void applyCNOT(QubitState *state, int control, int target) {
     }
 }
 
-#include <stdlib.h>
-#include <math.h>
-#include <complex.h>
+
 
 int measure(QubitState *state, int qubit) {
     long long dim = 1LL << state->numQubits;

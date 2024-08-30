@@ -33,6 +33,8 @@ void printState(QubitState *state);
 void applyHadamard(QubitState *state, int target);
 void applyX(QubitState *state, int target);
 void applyZ(QubitState *state, int target);
+void applyT(QubitState *state, int target);
+void applyS(QubitState *state, int target);
 void applyCNOT(QubitState *state, int control, int target);
 int* measure_all(QubitState *state);
 int measure(QubitState *state, int qubit);  
