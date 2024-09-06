@@ -26,6 +26,12 @@ typedef struct {
     double complex *amplitudes;
 } QubitState;
 
+typedef struct {
+    double prob0;  // Probabilità di misurare 0
+    double prob1;  // Probabilità di misurare 1
+    int result;    // Risultato della misurazione (0 o 1)
+} MeasurementResult;
+
 QubitState* initializeState(int numQubits);
 void initializeStateTo(QubitState *state, int index);
 void freeState(QubitState *state);
@@ -37,5 +43,5 @@ void applyT(QubitState *state, int target);
 void applyS(QubitState *state, int target);
 void applyCNOT(QubitState *state, int control, int target);
 int* measure_all(QubitState *state);
-int measure(QubitState *state, int qubit);  
+MeasurementResult measure(QubitState *state, int qubit);  
 #endif // QUANTUM_SIM_H

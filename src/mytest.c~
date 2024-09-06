@@ -1,0 +1,103 @@
+#include "quantum_sim.h"
+#include <stdio.h>
+#include <math.h>
+
+// Funzione per stampare lo stato quantistico
+void print_state(QubitState *state) {
+    long long dim = 1LL << state->numQubits; // Dimensione dello spazio di Hilbert
+    printf("Stato:\n");
+    printf("%-10s %-20s\n", "Indice", "Ampiezza (Re + Imi)");
+    printf("-----------------------------\n");
+    for (long long i = 0; i < dim; i++) {
+        printf("%-10lld %f + %fi\n", i, creal(state->amplitudes[i]), cimag(state->amplitudes[i]));
+    }
+    printf("\n");
+}
+
+// Funzione per verificare la misura di un qubit specifico
+void measure_and_print(QubitState *state, int qubit) {
+    int result = measure(state, qubit);
+    printf("Misura del qubit %d: %d\n", qubit, result);
+    print_state(state);
+}
+
+// Funzione per verificare l'applicazione di un gate
+void apply_and_print_gate(QubitState *state, void (*gate)(QubitState*, int), int qubit, const char *gate_name) {
+    printf("Applicazione del gate %s sul qubit %d:\n", gate_name, qubit);
+    gate(state, qubit);
+    print_state(state);
+}
+
+// Funzione per verificare l'applicazione del gate CNOT
+void apply_and_print_cnot(QubitState *state, int control, int target) {
+    printf("Applicazione del gate CNOT (control %d -> target %d):\n", control, target);
+    applyCNOT(state, control, target);
+    print_state(state);
+}
+
+// Funzione di test per i vari gate e le misure
+void test_suite() {
+    // 1. Inizializza lo stato |0>
+    QubitState *state = initializeState(1);
+    printf("Stato iniziale (|0>):\n");
+    print_state(state);
+
+    // 2. Applica il gate X (Pauli-X) al qubit 0
+    apply_and_print_gate(state, applyX, 0, "X (Pauli-X)");
+
+    // 3. Applica il gate Y (Pauli-Y) al qubit 0
+    apply_and_print_gate(state, applyY, 0, "Y (Pauli-Y)");
+
+    // 4. Applica il gate Z (Pauli-Z) al qubit 0
+    apply_and_print_gate(state, applyZ, 0, "Z (Pauli-Z)");
+
+    // 5. Applica il gate Hadamard al qubit 0
+    apply_and_print_gate(state, applyHadamard, 0, "Hadamard");
+
+    // 6. Misura il qubit 0
+    measure_and_print(state, 0);
+
+    // 7. Test a 2 qubit (stato |00>)
+    printf("Test con 2 qubit:\n");
+    state = initializeState(2);
+    printf("Stato iniziale (|00>):\n");
+    print_state(state);
+
+    // 8. Applica il gate CNOT (control: qubit 0 -> target: qubit 1)
+    apply_and_print_cnot(state, 0, 1);
+
+    // 9. Applica Hadamard sul qubit 0
+    apply_and_print_gate(state, applyHadamard, 0, "Hadamard");
+
+    // 10. Applica CNOT (control: qubit 0 -> target: qubit 1)
+    apply_and_print_cnot(state, 0, 1);
+
+    // 11. Misura il qubit 0 e il qubit 1
+    measure_and_print(state, 0);
+    measure_and_print(state, 1);
+
+    // 12. Test a 3 qubit (stato |000>)
+    printf("Test con 3 qubit:\n");
+    state = initializeState(3);
+    printf("Stato iniziale (|000>):\n");
+    print_state(state);
+
+    // 13. Applica Hadamard su tutti i qubit
+    for (int i = 0; i < 3; i++) {
+        apply_and_print_gate(state, applyHadamard, i, "Hadamard");
+    }
+
+    // 14. Applica CNOT (control: qubit 0 -> target: qubit 2)
+    apply_and_print_cnot(state, 0, 2);
+
+    // 15. Misura tutti i qubit
+    measure_and_print(state, 0);
+    measure_and_print(state, 1);
+    measure_and_print(state, 2);
+}
+
+int main() {
+    // Chiamata alla suite di test
+    test_suite();
+    return 0;
+}

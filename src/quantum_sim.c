@@ -186,52 +186,25 @@ void applyCNOT(QubitState *state, int control, int target) {
     }
 }
 
-#include <stdio.h>
-#include <math.h>
-#include <complex.h>
 
-// Definizione della macro per il debug
-// #define DEBUG  // Puoi definire DEBUG qui o nel Makefile con -DDEBUG
-
-int measure(QubitState *state, int qubit) {
-    long long dim = 1LL << state->numQubits; // Dimensione dello spazio di Hilbert
+MeasurementResult measure(QubitState *state, int qubit) {
+    long long dim = 1LL << state->numQubits;
     double prob0 = 0.0;
-    double prob1 = 0.0;
 
-    // Calcola la probabilità che il qubit sia nello stato |0> o |1>
+    // Calcola la probabilità che il qubit sia nello stato |0>
     for (long long i = 0; i < dim; i++) {
+        // Verifica se il qubit specificato è nello stato |0> (qubit nel bit i)
         if (((i >> (state->numQubits - qubit - 1)) & 1) == 0) {
-            // Qubit è nello stato |0> (include |00> e |01>)
-            #ifdef DEBUG
-            printf("Stato %lld, qubit %d è |0>, ampiezza: %f\n", i, qubit, cabs(state->amplitudes[i]));
-            #endif
             prob0 += pow(cabs(state->amplitudes[i]), 2);
-        } else {
-            // Qubit è nello stato |1> (include |10> e |11>)
-            #ifdef DEBUG
-            printf("Stato %lld, qubit %d è |1>, ampiezza: %f\n", i, qubit, cabs(state->amplitudes[i]));
-            #endif
-            prob1 += pow(cabs(state->amplitudes[i]), 2);
         }
     }
 
-    // Stampa le probabilità calcolate
-    #ifdef DEBUG
-    printf("Probabilità di misurare 0: %f\n", prob0);
-    printf("Probabilità di misurare 1: %f\n", prob1);
-    #endif
+    // La probabilità di misurare |1> è complementare
+    double prob1 = 1.0 - prob0;
 
-    // Genera un numero casuale per decidere l'outcome della misura
+    // Genera un numero casuale per decidere il risultato
     double rand_val = (double)rand() / RAND_MAX;
-    #ifdef DEBUG
-    printf("Valore random generato: %f\n", rand_val);
-    #endif
-
-    // Decidi l'outcome in base alle probabilità
     int result = (rand_val < prob0) ? 0 : 1;
-    #ifdef DEBUG
-    printf("Risultato della misura: %d\n", result);
-    #endif
 
     // Collassa lo stato in base al risultato della misura
     double scale_factor = 0.0;
@@ -239,24 +212,31 @@ int measure(QubitState *state, int qubit) {
         scale_factor = 1.0 / sqrt(prob0);
         for (long long i = 0; i < dim; i++) {
             if (((i >> (state->numQubits - qubit - 1)) & 1) == 1) {
-                state->amplitudes[i] = 0.0 + 0.0 * I; // Annulla le ampiezze con qubit = 1
+                state->amplitudes[i] = 0.0 + 0.0 * I;  // Annulla le ampiezze con qubit = 1
             } else {
-                state->amplitudes[i] *= scale_factor; // Normalizza le ampiezze con qubit = 0
+                state->amplitudes[i] *= scale_factor;  // Normalizza le ampiezze con qubit = 0
             }
         }
     } else {
         scale_factor = 1.0 / sqrt(prob1);
         for (long long i = 0; i < dim; i++) {
             if (((i >> (state->numQubits - qubit - 1)) & 1) == 0) {
-                state->amplitudes[i] = 0.0 + 0.0 * I; // Annulla le ampiezze con qubit = 0
+                state->amplitudes[i] = 0.0 + 0.0 * I;  // Annulla le ampiezze con qubit = 0
             } else {
-                state->amplitudes[i] *= scale_factor; // Normalizza le ampiezze con qubit = 1
+                state->amplitudes[i] *= scale_factor;  // Normalizza le ampiezze con qubit = 1
             }
         }
     }
 
-    return result;
+    // Restituisce sia le probabilità che il risultato
+    MeasurementResult m_result;
+    m_result.prob0 = prob0;
+    m_result.prob1 = prob1;
+    m_result.result = result;
+
+    return m_result;
 }
+
 
 int* measure_all(QubitState *state) {
     long long dim = 1LL << state->numQubits;  // Dimensione dello spazio di Hilbert: 2^numQubits
