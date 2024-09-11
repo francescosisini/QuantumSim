@@ -54,4 +54,5 @@ void applyCNOT(QubitState *state, int control, int target);
 int* measure_all(QubitState *state);
 MeasurementResult measure(QubitState *state, int qubit);
 QubitAmplitudes getQubitAmplitudes(QubitState* state, int target);
+void printQubitAmplitudes(QubitAmplitudes amplitudes);
 #endif // QUANTUM_SIM_H
