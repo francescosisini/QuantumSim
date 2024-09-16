@@ -10,7 +10,7 @@ C_TO_QASM_DIR=$(SRC_DIR)/c_to_qasm
 CIRCUIT_FILE ?= $(SRC_DIR)/circuit.c
 
 # File sorgente per il simulatore
-SRC=$(SRC_DIR)/quantum_sim.c $(CIRCUIT_FILE) $(SRC_DIR)/main.c
+SRC=$(SRC_DIR)/quantum_sim.c $(CIRCUIT_FILE) $(SRC_DIR)/main.c 
 
 # Nome dell'eseguibile del simulatore
 TARGET=QuantumSim

@@ -145,25 +145,19 @@ void freeState(QubitState *state) {
     free(state->amplitudes);
     free(state);
 }
-
 void applySingleQubitGate(QubitState *state, int target, double complex gate[2][2]) {
     long long dim = 1LL << state->numQubits;
     double complex new_amplitudes[dim];
 
-    // Copia le ampiezze originali nel nuovo array
-    for (long long i = 0; i < dim; i++) {
-        new_amplitudes[i] = state->amplitudes[i];
-    }
-
-    // Applica il gate al qubit target numerato da sinistra
+    // Applica il gate al qubit target
     for (long long i = 0; i < dim; i++) {
         int bitValue = (i >> (state->numQubits - 1 - target)) & 1; // Determina se il bit target è 0 o 1
         long long j = i ^ (1LL << (state->numQubits - 1 - target)); // Calcola l'indice con il bit target invertito
 
-        // Scambia le ampiezze se necessario
-        if (bitValue == 1) {
+        if (bitValue == 0) {
+            new_amplitudes[i] = gate[0][0] * state->amplitudes[i] + gate[0][1] * state->amplitudes[j];
+        } else {
             new_amplitudes[i] = gate[1][0] * state->amplitudes[j] + gate[1][1] * state->amplitudes[i];
-            new_amplitudes[j] = gate[0][0] * state->amplitudes[j] + gate[0][1] * state->amplitudes[i];
         }
     }
 
@@ -172,7 +166,6 @@ void applySingleQubitGate(QubitState *state, int target, double complex gate[2][
         state->amplitudes[i] = new_amplitudes[i];
     }
 }
-
 
 void applyHadamard(QubitState *state, int target) {
     double complex H[2][2] = {
@@ -190,8 +183,6 @@ double complex X[2][2] = {
     };
     applySingleQubitGate(state, target, X);
 }
-
-
 
 void applyZ(QubitState *state, int target) {
     double complex Z[2][2] = {
@@ -246,6 +237,32 @@ void applyCNOT(QubitState *state, int control, int target) {
             long long j = i ^ (1LL << (state->numQubits - 1 - target)); // Inverti solo il bit target
             new_amplitudes[i] = state->amplitudes[j];
             new_amplitudes[j] = state->amplitudes[i];
+        }
+    }
+
+    // Aggiorna le ampiezze nello stato originale
+    for (long long i = 0; i < dim; i++) {
+        state->amplitudes[i] = new_amplitudes[i];
+    }
+}
+void applyCPhaseShift(QubitState *state, int control, int target, double complex phase) {
+    long long dim = 1LL << state->numQubits;
+    double complex new_amplitudes[dim];
+
+    // Copia le ampiezze originali nel nuovo array
+    for (long long i = 0; i < dim; i++) {
+        new_amplitudes[i] = state->amplitudes[i];
+    }
+
+    // Applica il gate CPhaseShift con il controllo e il target numerati da sinistra a destra
+    for (long long i = 0; i < dim; i++) {
+        // Calcola il bit di controllo e il bit target correttamente orientati
+        int control_bit = (i >> (state->numQubits - 1 - control)) & 1;
+        int target_bit = (i >> (state->numQubits - 1 - target)) & 1;
+
+        // Applica lo shift di fase solo se il qubit di controllo è 1 e il qubit target è 1
+        if (control_bit == 1 && target_bit == 1) {
+            new_amplitudes[i] *= phase;  // Moltiplica l'ampiezza dello stato per la fase specificata
         }
     }
 
@@ -347,18 +364,47 @@ QubitAmplitudes getQubitAmplitudes(QubitState* state, int target) {
     result.amplitude0 = 0.0 + 0.0 * I;
     result.amplitude1 = 0.0 + 0.0 * I;
 
-    // Somma le ampiezze relative agli stati del qubit target
+    // Itera attraverso tutti gli stati del sistema
     for (long long i = 0; i < dim; i++) {
+        // Verifica se il qubit target è nello stato |0> o |1> (qubit 0 è il più significativo)
         if (((i >> (state->numQubits - 1 - target)) & 1) == 0) {
-            result.amplitude0 += state->amplitudes[i];
+            result.amplitude0 += state->amplitudes[i];  // Somma l'ampiezza associata allo stato |0> del qubit target
         } else {
-            result.amplitude1 += state->amplitudes[i];
+            result.amplitude1 += state->amplitudes[i];  // Somma l'ampiezza associata allo stato |1> del qubit target
         }
     }
     
     return result;
 }
+
+
 void printQubitAmplitudes(QubitAmplitudes amplitudes) {
     printf("Ampiezza di |0>: %f + %fi\n", creal(amplitudes.amplitude0), cimag(amplitudes.amplitude0));
     printf("Ampiezza di |1>: %f + %fi\n", creal(amplitudes.amplitude1), cimag(amplitudes.amplitude1));
+}
+
+
+//------------------ 3 qubit gates ---------------------------//
+// Implementazione del Toffoli Gate
+// Descrizione: Un gate CCNOT (Toffoli) controllato su due qubit che inverte il qubit target.
+void applyToffoli(QubitState* state, int control1, int control2, int target) {
+    // Applica la decomposizione Toffoli con gate a due qubit
+    // Implementazione basata sulla decomposizione visualizzata (con H, T e CNOT)
+  applyHadamard(state,target);
+  applyCNOT(state,control2,target);
+  applyTdag(state,target);
+  applyCNOT(state,control1,target);
+  applyT(state,target);
+  applyCNOT(state,control2,target);
+  applyTdag(state,target);
+  applyCNOT(state,control1,target);
+  applyT(state,target);
+  applyHadamard(state,target);
+  //---
+  applyT(state,control2);
+  applyCNOT(state,control1,control2);
+  applyT(state,control1);
+  applyTdag(state,control2);
+  applyCNOT(state,control1,control2);
+
 }

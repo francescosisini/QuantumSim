@@ -1,0 +1,59 @@
+#include "three_qubit_gates.h"
+#include <math.h>
+#include <complex.h>
+
+
+// Implementazione del Fredkin Gate
+// Descrizione: Un gate SWAP controllato che scambia i due qubit target solo se il qubit di controllo è |1>.
+void fredkin(QubitState* state, int control, int target1, int target2) {
+    applyCNOT(state, target1, target2);
+    applyCNOT(state, target2, target1);
+    applyCNOT(state, target1, target2);
+}
+
+// Implementazione del CCZ Gate
+// Descrizione: Un Controlled-Controlled-Z (CCZ) applica un gate Z al qubit target se entrambi i qubit di controllo sono |1>.
+void ccz(QubitState* state, int control1, int control2, int target) {
+    applyCNOT(state, control1, control2); 
+    applySingleQubitGate(state, target, PAULI_Z);
+    applyCNOT(state, control1, control2); 
+}
+
+// Implementazione del Peres Gate
+// Descrizione: Un gate che implementa un Toffoli seguito da un gate CNOT su un altro qubit.
+void peres(QubitState* state, int control1, int control2, int target) {
+    applyCNOT(state, control1, control2); 
+    applyCNOT(state, control2, target);
+}
+
+// Implementazione del Margolus Gate
+// Descrizione: Una variante del Toffoli con decomposizione alternativa. Implementato con gate di controllo.
+void margolus(QubitState* state, int control1, int control2, int target) {
+    applyCNOT(state, control1, control2);
+    applyCNOT(state, control2, target);
+}
+
+// Implementazione del Deutsch Gate
+// Descrizione: Un gate a tre qubit che esegue una particolare trasformazione su un target controllato da due qubit.
+void deutsch(QubitState* state, int control1, int control2, int target) {
+    // Applica la decomposizione del gate Deutsch con CNOT e rotazioni
+    applyCNOT(state, control1, target);
+    applyCPhaseShift(state, control2, target, T_GATE);
+}
+
+// Implementazione del Diagonal Gate
+// Descrizione: Una matrice diagonale specifica utilizzata per alcune operazioni di correzione degli errori.
+void diagonal(QubitState* state, int control1, int control2, int target) {
+    applyCPhaseShift(state, control1, target, T_GATE);
+    applyCPhaseShift(state, control2, target, T_INV);
+}
+
+// Implementazione del blocco della Quantum Fourier Transform (QFT)
+// Descrizione: Esegue una serie di Hadamard e controlled phase gates per implementare un'operazione QFT su tre qubit.
+void qft_block(QubitState* state, int qubit1, int qubit2, int qubit3) {
+    applySingleQubitGate(state, qubit1, H_GATE);
+    applyCPhaseShift(state, qubit1, qubit2, PHASE_90);
+    applySingleQubitGate(state, qubit2, H_GATE);
+    applyCPhaseShift(state, qubit2, qubit3, PHASE_90);
+    applySingleQubitGate(state, qubit3, H_GATE);
+}

@@ -20,6 +20,7 @@
 #define QUANTUM_SIM_H
 
 #include <complex.h>
+#include <math.h>
 
 typedef struct {
     int numQubits;
@@ -51,6 +52,9 @@ void applyT(QubitState *state, int target);
 void applyTdag(QubitState *state, int target);
 void applyS(QubitState *state, int target);
 void applyCNOT(QubitState *state, int control, int target);
+void applyCPhaseShift(QubitState *state, int control, int target, double complex phase);
+void applyToffoli(QubitState* state, int control1, int control2, int target);
+void applySingleQubitGate(QubitState *state, int target, double complex gate[2][2]);
 int* measure_all(QubitState *state);
 MeasurementResult measure(QubitState *state, int qubit);
 QubitAmplitudes getQubitAmplitudes(QubitState* state, int target);
