@@ -55,12 +55,49 @@ void initializeStateTo(QubitState *state, int index) {
     state->amplitudes[index] = 1.0 + 0.0 * I;  // Imposta l'ampiezza dello stato indicato a 1
 }
 
+/**
+ * Stampa lo stato quantistico completo del sistema.
+ *
+ * Questa funzione scorre tutte le ampiezze del sistema quantistico e stampa
+ * ciascun stato di base con la relativa ampiezza complessa. Lo stato è rappresentato 
+ * in termini di una superposizione dei possibili stati di base, ognuno dei quali è 
+ * associato a un'ampiezza complessa.
+ *
+ * @param state Un puntatore alla struttura `QubitState` che contiene le ampiezze 
+ *              dello stato quantistico attuale e il numero di qubit nel sistema.
+ *
+ * Dettagli:
+ * - La dimensione dello spazio di Hilbert (dim) è calcolata come 2^numQubits.
+ * - Per ogni stato base (rappresentato da `i`), la funzione stampa l'ampiezza complessa
+ *   corrispondente nella forma "reale + immaginaria i".
+ */
 void printState(QubitState *state) {
     long long dim = 1LL << state->numQubits;
     for (long long i = 0; i < dim; i++) {
         printf("Stato %lld: %f + %fi\n", i, creal(state->amplitudes[i]), cimag(state->amplitudes[i]));
     }
 }
+
+/**
+ * Stampa lo stato quantistico ignorando specifici qubit.
+ *
+ * Questa funzione scorre tutte le ampiezze dello stato quantistico, ignorando 
+ * gli stati che coinvolgono i qubit specificati. Gli stati ignorati sono esclusi 
+ * dalla stampa, e gli indici dei qubit rimanenti vengono ricalcolati e mappati 
+ * per riflettere solo i qubit che non sono stati ignorati.
+ *
+ * @param state Un puntatore alla struttura `QubitState` che contiene le ampiezze 
+ *              dello stato quantistico attuale e il numero di qubit nel sistema.
+ * @param ignoreQubits Un array di interi che contiene gli indici dei qubit da ignorare.
+ * @param numIgnoreQubits Il numero di qubit da ignorare (lunghezza dell'array ignoreQubits).
+ *
+ * Dettagli:
+ * - La dimensione dello spazio di Hilbert (dim) è calcolata come 2^numQubits.
+ * - La funzione esamina ciascuno stato e ignora quelli in cui uno dei qubit specificati è diverso da 0.
+ * - Gli stati che non contengono i qubit ignorati vengono stampati con un nuovo indice mappato,
+ *   che esclude i qubit ignorati.
+ * - L'output è nella forma "indice mappato: parte reale + parte immaginaria i".
+ */
 void printStateIgnoringQubits(QubitState *state, int *ignoreQubits, int numIgnoreQubits) {
     long long dim = 1LL << state->numQubits;  // Dimensione totale dello stato quantistico
     int ignore = 0;
@@ -107,7 +144,23 @@ void printStateIgnoringQubits(QubitState *state, int *ignoreQubits, int numIgnor
 }
 
 
-
+/**
+ * Inizializza lo stato quantistico con tutti i qubit nello stato |0>.
+ *
+ * Questa funzione alloca memoria per un nuovo stato quantistico e lo imposta
+ * nello stato di base |0>^N, dove N è il numero di qubit specificato. L'ampiezza
+ * associata allo stato |0>^N viene impostata a 1.0, mentre tutte le altre ampiezze
+ * vengono inizializzate a 0.0.
+ *
+ * @param numQubits Il numero di qubit che il sistema quantistico deve avere.
+ * @return Un puntatore alla struttura `QubitState` che rappresenta lo stato inizializzato.
+ *
+ * Dettagli:
+ * - La dimensione dello spazio di Hilbert (dim) è pari a 2^numQubits.
+ * - Le ampiezze vengono allocate con `calloc`, inizializzando a zero ogni valore.
+ * - Lo stato risultante rappresenta il sistema quantistico con tutti i qubit nello stato |0>.
+ * - Lo stato viene restituito pronto per essere usato nelle simulazioni.
+ */
 QubitState* initializeState(int numQubits) {
      QubitState *state = (QubitState *)malloc(sizeof(QubitState));
     state->numQubits = numQubits;
@@ -125,6 +178,25 @@ QubitState* initializeState(int numQubits) {
     return state;
 }
 
+/**
+ * Inizializza il qubit target nello stato |1> mantenendo lo stato degli altri qubit.
+ *
+ * Questa funzione modifica lo stato di un singolo qubit all'interno del sistema
+ * quantistico, impostandolo nello stato |1> senza alterare lo stato degli altri qubit.
+ * Le ampiezze associate agli stati in cui il qubit target è |0> vengono trasferite
+ * agli stati corrispondenti in cui il qubit target è |1>, e le ampiezze dei
+ * corrispondenti stati con |0> vengono azzerate.
+ *
+ * @param state Un puntatore alla struttura `QubitState` che contiene il sistema quantistico.
+ * @param target L'indice del qubit che si desidera inizializzare nello stato |1>.
+ *
+ * Dettagli:
+ * - La funzione scorre tutte le possibili ampiezze del sistema (2^numQubits) e,
+ *   per ciascuna ampiezza, verifica se il qubit target è nello stato |0>.
+ * - Se il qubit target è |0>, la funzione scambia l'ampiezza con lo stato
+ *   corrispondente in cui il qubit target è |1>.
+ * - Dopo l'inizializzazione, tutte le ampiezze con il qubit target a |0> sono 0.0.
+ */
 void initializeSingleQubitToOne(QubitState* state, int target) {
     long long dim = 1LL << state->numQubits;
     
@@ -140,11 +212,46 @@ void initializeSingleQubitToOne(QubitState* state, int target) {
 }
 
 
-
+/**
+ * Libera la memoria allocata per lo stato quantistico.
+ *
+ * Questa funzione rilascia la memoria utilizzata per memorizzare lo stato quantistico,
+ * compresa la struttura `QubitState` e l'array di ampiezze associato. Deve essere chiamata
+ * quando lo stato non è più necessario per evitare perdite di memoria.
+ *
+ * @param state Un puntatore alla struttura `QubitState` da liberare.
+ *
+ * Dettagli:
+ * - La funzione libera prima l'array di ampiezze `state->amplitudes` utilizzato
+ *   per memorizzare lo stato di tutti i qubit.
+ * - Successivamente, libera la struttura `QubitState` stessa.
+ */
 void freeState(QubitState *state) {
     free(state->amplitudes);
     free(state);
 }
+
+/**
+ * Applica un gate a un singolo qubit nello stato quantistico.
+ *
+ * Questa funzione applica un gate quantistico a un qubit specificato in un sistema
+ * quantistico multi-qubit. Il gate viene rappresentato come una matrice 2x2 di numeri
+ * complessi e viene applicato al qubit target specificato. La funzione aggiorna lo
+ * stato del sistema tenendo conto delle interazioni tra i qubit.
+ *
+ * @param state Un puntatore alla struttura `QubitState` che rappresenta lo stato
+ *              del sistema quantistico.
+ * @param target L'indice del qubit a cui applicare il gate (0 per il qubit più significativo).
+ * @param gate   Una matrice 2x2 di numeri complessi che rappresenta il gate quantistico
+ *               da applicare (ad esempio, X, Y, Z, H, ecc.).
+ *
+ * Dettagli:
+ * - La funzione scorre tutti gli stati possibili del sistema (da 0 a 2^numQubits).
+ * - Determina lo stato del qubit target e applica la matrice del gate a seconda del
+ *   valore del bit target (0 o 1).
+ * - L'aggiornamento delle ampiezze di probabilità viene effettuato in un array temporaneo
+ *   e poi copiato nello stato originale.
+ */
 void applySingleQubitGate(QubitState *state, int target, double complex gate[2][2]) {
     long long dim = 1LL << state->numQubits;
     double complex new_amplitudes[dim];
@@ -183,6 +290,18 @@ double complex X[2][2] = {
     };
     applySingleQubitGate(state, target, X);
 }
+
+void applyY(QubitState *state, int target) {
+    // Definizione della matrice del gate Pauli-Y
+    double complex Y_GATE[2][2] = {
+        {0, -I},
+        {I, 0}
+    };
+
+    // Applicazione del gate Pauli-Y al qubit target
+    applySingleQubitGate(state, target, Y_GATE);
+}
+
 
 void applyZ(QubitState *state, int target) {
     double complex Z[2][2] = {
@@ -272,7 +391,27 @@ void applyCPhaseShift(QubitState *state, int control, int target, double complex
     }
 }
 
-
+/**
+ * Misura il valore di un qubit specificato nello stato quantistico e collassa il sistema.
+ *
+ * Questa funzione esegue una misura su un singolo qubit in uno stato quantistico multi-qubit.
+ * Il risultato della misura sarà 0 o 1, con probabilità determinate dalle ampiezze degli stati
+ * del sistema. La funzione calcola le probabilità, decide il risultato della misura in modo
+ * casuale in base a tali probabilità, e collassa il sistema quantistico nello stato coerente
+ * con il risultato osservato.
+ *
+ * @param state Un puntatore alla struttura `QubitState` che rappresenta lo stato del sistema.
+ * @param qubit L'indice del qubit da misurare (0 per il qubit più significativo).
+ * @return Un `MeasurementResult` contenente le probabilità di misurare 0 o 1 e il risultato della misura.
+ *
+ * Dettagli:
+ * - La funzione scorre tutte le ampiezze di probabilità per calcolare la probabilità che il
+ *   qubit sia nello stato |0>.
+ * - Genera un numero casuale per determinare il risultato della misura.
+ * - Collassa lo stato del sistema in base al risultato: se il risultato è 0, annulla tutte le
+ *   ampiezze che hanno il qubit target nello stato |1>, e viceversa.
+ * - Normalizza le ampiezze rimanenti per garantire che la somma delle probabilità sia 1.
+ */
 MeasurementResult measure(QubitState *state, int qubit) {
     long long dim = 1LL << state->numQubits;
     double prob0 = 0.0;
@@ -323,7 +462,26 @@ MeasurementResult measure(QubitState *state, int qubit) {
     return m_result;
 }
 
-
+/**
+ * Esegue una misura su tutti i qubit del sistema e collassa lo stato.
+ *
+ * Questa funzione simula la misura simultanea di tutti i qubit in un sistema quantistico.
+ * Viene generato un numero casuale per determinare in quale stato il sistema collasserà,
+ * basandosi sulle ampiezze delle probabilità degli stati quantistici. Dopo la misura,
+ * il sistema viene collassato nello stato coerente con il risultato osservato, e tutte
+ * le altre ampiezze vengono annullate.
+ *
+ * @param state Un puntatore alla struttura `QubitState` che rappresenta lo stato del sistema.
+ * @return Un array di interi che contiene il risultato della misura per ciascun qubit,
+ *         con i valori 0 o 1 per ogni qubit.
+ *
+ * Dettagli:
+ * - La funzione calcola la probabilità cumulativa per ciascuno degli stati del sistema.
+ * - Un numero casuale viene generato per determinare in quale stato il sistema collassa.
+ * - Una volta determinato lo stato di collasso, viene restituito un array con i risultati
+ *   della misura per ciascun qubit.
+ * - Il sistema viene collassato nello stato corrispondente, con tutte le altre ampiezze azzerate.
+ */
 int* measure_all(QubitState *state) {
     long long dim = 1LL << state->numQubits;  // Dimensione dello spazio di Hilbert: 2^numQubits
     double cumulativeProb = 0.0;  // Probabilità cumulativa inizializzata a 0
@@ -357,6 +515,7 @@ int* measure_all(QubitState *state) {
     return results;  // Restituisce l'array dei risultati della misura
 }
 
+
 QubitAmplitudes getQubitAmplitudes(QubitState* state, int target) {
     long long dim = 1LL << state->numQubits;  // Dimensione dello spazio di Hilbert (2^numQubits)
     
@@ -385,11 +544,9 @@ void printQubitAmplitudes(QubitAmplitudes amplitudes) {
 
 
 //------------------ 3 qubit gates ---------------------------//
-// Implementazione del Toffoli Gate
-// Descrizione: Un gate CCNOT (Toffoli) controllato su due qubit che inverte il qubit target.
+
 void applyToffoli(QubitState* state, int control1, int control2, int target) {
-    // Applica la decomposizione Toffoli con gate a due qubit
-    // Implementazione basata sulla decomposizione visualizzata (con H, T e CNOT)
+
   applyHadamard(state,target);
   applyCNOT(state,control2,target);
   applyTdag(state,target);
@@ -408,3 +565,78 @@ void applyToffoli(QubitState* state, int control1, int control2, int target) {
   applyCNOT(state,control1,control2);
 
 }
+
+
+
+void applyFredkin(QubitState* state, int control, int target1, int target2) {
+
+    applyToffoli(state, control, target1, target2);
+    
+
+    applyCNOT(state, target1, target2);
+    
+
+    applyToffoli(state, control, target1, target2);
+    
+
+    applyCNOT(state, target1, target2);
+    
+
+    applyToffoli(state, control, target1, target2);
+    
+
+    applyCNOT(state, target1, target2);
+}
+
+void applyCCZ(QubitState* state, int control1, int control2, int target) {
+
+    applyHadamard(state, target);
+
+    applyToffoli(state, control1, control2, target);
+
+    applyHadamard(state, target);
+    
+
+    applyZ(state, target);
+    
+    applyToffoli(state, control1, control2, target);
+    
+    applyHadamard(state, target);
+}
+
+
+
+void applyCCY(QubitState* state, int control1, int control2, int target) {
+
+    applyToffoli(state, control1, control2, target);
+    
+
+    applyY(state, target);
+    
+
+    applyToffoli(state, control1, control2, target);
+}
+
+
+
+void applyCCPhase(QubitState* state, int control1, int control2, int target, double phase) {
+
+    applyToffoli(state, control1, control2, target);
+    
+
+    applyPhase(state, target, phase);
+    
+
+    applyToffoli(state, control1, control2, target);
+}
+
+void applyPhase(QubitState* state, int qubit, double phase) {
+
+    for (int i = 0; i < (1 << state->numQubits); i++) {
+        if (((i >> qubit) & 1) == 1) {
+            state->amplitudes[i] *= cexp(I * phase);
+        }
+    }
+}
+
+
