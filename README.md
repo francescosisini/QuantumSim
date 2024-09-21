@@ -12,10 +12,12 @@ Per una descrizione dettagliata del progetto, consulta la [Introduzione completa
 
 ## Caratteristiche
 
-   - Inizializzazione di stati quantistici con qualsiasi numero di qubits.
-   - Applicazione dei gate Hadamard, Pauli-X, Pauli-Z e CNOT.
-   - Misurazione dello stato quantistico e collasso in uno stato base.
-   - Print di debug per tracciare il flusso di esecuzione.
+- Inizializzazione di stati quantistici con qualsiasi numero di qubits.
+- Applicazione di gate quantistici a 1, 2 e 3 qubit, tra cui Hadamard, Pauli-X, Pauli-Z, CNOT, e gate a 3 qubit come Toffoli (CCNOT), Fredkin, CCZ e CCY.
+- **Decomposizione dei gate a 3 qubit**: Come in un vero hardware quantistico, i gate a 3 qubit vengono decomposti in operazioni elementari, utilizzando gate a 1 e 2 qubit (vedi Khaneja Glaser Decomposition (KGD)), garantendo una simulazione accurata e realistica.
+- Misurazione dello stato quantistico e collasso in uno stato base.
+- Stampa di debug per tracciare il flusso di esecuzione e visualizzare lo stato quantistico in ogni momento.
+
 
 ## Documentazione di Supporto
 
