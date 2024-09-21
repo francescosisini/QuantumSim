@@ -1,0 +1,31 @@
+# Ignora gli eseguibili generati
+QuantumSim
+QasmParser
+CtoQasm
+
+# Ignora i file oggetto (se li usi)
+*.o
+
+# Ignora i file di log e di debug
+*.log
+*.out
+*.err
+
+# Ignora i file di backup di editor di testo
+*~
+*.swp
+*.bak
+
+# Ignora file temporanei del sistema operativo
+.DS_Store
+Thumbs.db
+
+# Ignora i core dump
+core
+
+# Ignora gli eventuali file di configurazione dell'ambiente
+*.env
+
+# Ignora eventuali build directory (se presente)
+build/
+dist/
