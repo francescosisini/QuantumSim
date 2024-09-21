@@ -1,4 +1,4 @@
-#include "quantum_sim.h"
+#include "../src/quantum_sim.h"
 #include <math.h>
 #include <complex.h>
 #include <stdio.h>
