@@ -74,9 +74,20 @@ void initializeStateTo(QubitState *state, int index) {
 void printState(QubitState *state) {
     long long dim = 1LL << state->numQubits;
     for (long long i = 0; i < dim; i++) {
-        printf("Stato %lld: %f + %fi\n", i, creal(state->amplitudes[i]), cimag(state->amplitudes[i]));
+        // Stampa lo stato con la sua ampiezza
+        printf("Stato %lld: %f + %fi | ", i, creal(state->amplitudes[i]), cimag(state->amplitudes[i]));
+
+        // Stampa la rappresentazione binaria dell'indice i
+        for (int j = state->numQubits - 1; j >= 0; j--) {
+            printf("%d", (i >> j) & 1);
+        }
+
+        // Fine della riga
+        printf("\n");
     }
 }
+
+
 
 /**
  * Stampa lo stato quantistico ignorando specifici qubit.
