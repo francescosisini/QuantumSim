@@ -88,7 +88,6 @@ void printState(QubitState *state) {
 }
 
 
-
 /**
  * Stampa lo stato quantistico ignorando specifici qubit.
  *

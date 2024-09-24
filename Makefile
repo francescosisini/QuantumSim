@@ -1,5 +1,5 @@
 CC=gcc
-CFLAGS=-Wall -Wextra -std=c99
+CFLAGS=-w -Wall -Wextra -std=c99
 
 # Directory dei file sorgente
 SRC_DIR=src
