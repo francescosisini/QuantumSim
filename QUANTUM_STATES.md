@@ -15,6 +15,18 @@ Ad esempio, per un sistema di 3 qubit, i possibili stati sono:
 
 Questo produce un totale di $2^3=8$ stati.
 
+## Ordinamento dei Qubit e delle Ampiezze
+
+Nella libreria, l'indice del qubit segue la convenzione in cui il qubit q0 rappresenta il coefficiente della potenza di 2^(N-1), mentre l'ultimo qubit q(N-1) rappresenta il coefficiente della potenza di 2^0. Questo significa che lo stato |q0, q1, ..., q(N-1)⟩ rappresenta il numero binario in cui q0 è il bit più significativo e q(N-1) è il bit meno significativo.
+
+Ad esempio, per un sistema a 3 qubit:
+
+    Il qubit q0 rappresenta il coefficiente di 2^2 (cioè, 4),
+    Il qubit q1 rappresenta il coefficiente di 2^1 (cioè, 2),
+    Il qubit q2 rappresenta il coefficiente di 2^0 (cioè, 1).
+
+Lo stato ∣100⟩ corrisponde quindi al numero 4, mentre ∣011⟩ corrisponde al numero 3.
+
 ## Rappresentazione Matematica
 
 Questi stati possono essere rappresentati come vettori in uno spazio di Hilbert di dimensione $2^n$. 
