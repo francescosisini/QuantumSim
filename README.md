@@ -1,13 +1,18 @@
-# QuantumSim
+# QuantumSim - Simulatore Quantistico in C
 
 QuantumSim è un simulatore di calcolo quantistico che supporta gate universali a 2 qubits e la funzionalità di misurazione. 
 Questo simulatore consente di inizializzare stati quantistici, applicare gate quantistici e misurare gli stati quantistici risultanti.
+
+[![Scarica ora](https://img.shields.io/badge/Download-Scarica_ora-blue?style=for-the-badge&logo=github)](https://github.com/tuo-progetto/archive/main.zip)
+
+
+
 
 
 ![QuantumSim - Scopri di più e scaricalo](images/youandmequbit.jpeg)
 
 
-## Introduzione al Progetto
+## Introduzione al Progetto: Esplora il mondo della computazione quantistica con il simulatore open-source
 
 QuantumSim è un simulatore di computazione quantistica progettato per programmatori C che desiderano esplorare il mondo della programmazione quantistica senza dover necessariamente avere una profonda conoscenza della meccanica quantistica. 
 
