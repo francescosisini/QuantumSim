@@ -3,6 +3,10 @@
 QuantumSim è un simulatore di calcolo quantistico che supporta gate universali a 2 qubits e la funzionalità di misurazione. 
 Questo simulatore consente di inizializzare stati quantistici, applicare gate quantistici e misurare gli stati quantistici risultanti.
 
+
+![QuantumSim - Scopri di più e scaricalo](images/youandmequbit.jpeg)
+
+
 ## Introduzione al Progetto
 
 QuantumSim è un simulatore di computazione quantistica progettato per programmatori C che desiderano esplorare il mondo della programmazione quantistica senza dover necessariamente avere una profonda conoscenza della meccanica quantistica. 
