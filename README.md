@@ -3,7 +3,9 @@
 QuantumSim è un simulatore di calcolo quantistico che supporta gate universali a 2 qubits e la funzionalità di misurazione. 
 Questo simulatore consente di inizializzare stati quantistici, applicare gate quantistici e misurare gli stati quantistici risultanti.
 
-[![Scarica ora](https://img.shields.io/badge/Download-Scarica_ora-blue?style=for-the-badge&logo=github)]([https://github.com/tuo-progetto/archive/main.zip](https://github.com/francescosisini/QuantumSim/archive/refs/heads/master.zip))
+[![Scarica ora](https://img.shields.io/badge/Download-Scarica_ora-blue?style=for-the-badge&logo=github)](
+https://github.com/francescosisini/QuantumSim/archive/refs/heads/master.zip)
+
 
 
 
