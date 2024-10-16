@@ -49,9 +49,7 @@
  */
 void initializeStateTo(QubitState *state, int index) {
     long long dim = 1LL << state->numQubits;
-    for (long long i = 0; i < dim; i++) {
-        state->amplitudes[i] = 0.0 + 0.0 * I;
-    }
+    memset(state->amplitudes, 0, sizeof(complex double) * dim);  // Inizializza tutta la memoria a zero
     state->amplitudes[index] = 1.0 + 0.0 * I;  // Imposta l'ampiezza dello stato indicato a 1
 }
 
