@@ -1,0 +1,43 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    - name: Set up build environment
+      run: sudo apt-get install build-essential gcc g++
+
+    - name: Install lcov for code coverage
+      run: sudo apt-get install lcov
+
+    - name: Compile project
+      run: make
+
+    - name: Run tests
+      run: make test
+
+    - name: Collect Code Coverage
+      run: |
+        lcov --capture --directory . --output-file coverage.info
+        lcov --remove coverage.info '/usr/*' --output-file coverage.info
+        lcov --list coverage.info
+
+    - name: Upload coverage report to Codecov
+      uses: codecov/codecov-action@v3
+      with:
+        files: coverage.info
+
+    - name: Clean up
+      run: make clean
