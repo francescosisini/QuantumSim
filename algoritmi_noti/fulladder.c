@@ -5,6 +5,7 @@ void circuit(void) {
     int a, b, cin;
 
     // Chiedi all'utente di inserire i valori di A, B e C_in
+    printf("Somma binaria di due bit A e B con riporto\n\n ");
     printf("Inserisci il valore dell'operando A (0 o 1): ");
     scanf("%d", &a);
     printf("Inserisci il valore dell'operando B (0 o 1): ");
