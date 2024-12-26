@@ -3,6 +3,10 @@ QuantumSim
 QasmParser
 CtoQasm
 
+# File di copertura del codice di gcov
+*.gcno
+*.gcda
+
 # Ignora i file oggetto (se li usi)
 *.o
 
