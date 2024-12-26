@@ -17,9 +17,10 @@ void applyOracle(QubitState *state) {
     
     // Marca lo stato |10⟩ usando un gate CZ
     applyX(state,0);
-    applyCZ(state, 1, 0);
+    applyCCZ(state,1, 2, 0);
     applyX(state,0);
-    printf("[DEBUG] Marcato lo stato |10⟩\n");
+    applyCCZ(state,1, 2, 0);
+    printf("[DEBUG] Marcato lo stato |110⟩ e |111⟩ \n");
       printState(state);
 }
 
@@ -36,12 +37,19 @@ void applyDiffusion(QubitState *state) {
 
     // Step 2: Z su tutti i qubit
     for (int i = 0; i < state->numQubits; i++) {
-        applyZ(state, i); // Inverte il segno di tutti gli stati
+        applyX(state, i); // Inverte il segno di tutti gli stati
     }
 
     // Step 3: Controlled-Z (CZ) tra i qubit
-    applyCZ(state, 0, 1); // CZ applica una riflessione rispetto a |00>
+    applyCCZ(state,1,2, 0); // CZ applica una riflessione rispetto a |00>
 
+
+    // Step 2: Z su tutti i qubit
+    for (int i = 0; i < state->numQubits; i++) {
+        applyX(state, i); // Inverte il segno di tutti gli stati
+    }
+
+    
     // Step 4: Hadamard su tutti i qubit
     for (int i = 0; i < state->numQubits; i++) {
         applyHadamard(state, i);
@@ -56,19 +64,20 @@ void applyDiffusion(QubitState *state) {
 void circuit() {
     printf("[INFO] Avvio dell'algoritmo di Grover\n");
 
-    // Inizializza lo stato con 2 qubit
-    QubitState *state = initializeState(2);
-    printf("[INFO] Stato iniziale con 2 qubit\n");
+    // Inizializza lo stato con 3 qubit
+    QubitState *state = initializeState(3);
+    printf("[INFO] Stato iniziale con 3 qubit\n");
     printState(state);
 
     // Applica Hadamard-Walsh per creare la sovrapposizione uniforme
     applyHadamardWalsh(state);
 
-    // Applica l'oracolo per marcare gli stati |11⟩ e |01⟩
+    // Applica l'oracolo per marcare gli stati target
     applyOracle(state);
 
     // Applica l'operatore di diffusione
     applyDiffusion(state);
+
 
     // Misura i qubit
     printf("[INFO] Misurazione dello stato finale\n");

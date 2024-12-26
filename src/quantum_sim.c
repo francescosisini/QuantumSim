@@ -355,6 +355,8 @@ void applyToffoli(QubitState* state, int control1, int control2, int target) {
     applyCNOT(state, control1, control2);
 }
 
+
+
 void applyFredkin(QubitState* state, int control, int target1, int target2) {
     applyToffoli(state, control, target1, target2);
     applyCNOT(state, target1, target2);
@@ -364,7 +366,23 @@ void applyFredkin(QubitState* state, int control, int target1, int target2) {
     applyCNOT(state, target1, target2);
 }
 
+/**
+ * Applica un gate Controlled-Controlled-Z (CCZ) al sistema quantistico.
+ * Questo gate inverte il segno dello stato target solo se entrambi i qubit di controllo sono nello stato |1⟩.
+ */
 void applyCCZ(QubitState* state, int control1, int control2, int target) {
+    // Passo 1: Applica Hadamard al qubit target
+    applyHadamard(state, target);
+
+    // Passo 2: Applica il Toffoli gate (CCX)
+    applyToffoli(state, control1, control2, target);
+
+    // Passo 3: Applica Hadamard al qubit target (ripristino)
+    applyHadamard(state, target);
+}
+
+
+void _applyCCZ(QubitState* state, int control1, int control2, int target) {
     applyHadamard(state, target);
     applyToffoli(state, control1, control2, target);
     applyHadamard(state, target);
