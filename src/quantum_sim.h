@@ -53,6 +53,7 @@ void applyT(QubitState *state, int target);
 void applyTdag(QubitState *state, int target);
 void applyS(QubitState *state, int target);
 void applyCNOT(QubitState *state, int control, int target);
+void applyCZ(QubitState *state, int control, int target);
 void applyCPhaseShift(QubitState *state, int control, int target, double complex phase);
 void applyPhase(QubitState* state, int qubit, double phase);
 void applySingleQubitGate(QubitState *state, int target, double complex gate[2][2]);

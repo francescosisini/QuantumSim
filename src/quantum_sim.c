@@ -201,6 +201,24 @@ void applyCNOT(QubitState *state, int control, int target) {
     free(new_amplitudes);
 }
 
+/**
+ * Applica un gate Controlled-Z (CZ) al sistema quantistico.
+ */
+void applyCZ(QubitState *state, int control, int target) {
+    long long dim = 1LL << state->numQubits; // Dimensione dello spazio di Hilbert
+
+    for (long long i = 0; i < dim; i++) {
+        int control_bit = (i >> control) & 1; // Estrae il valore del qubit di controllo
+        int target_bit = (i >> target) & 1;   // Estrae il valore del qubit target
+
+        // Se il qubit di controllo è 1 e il target è 1, inverti il segno
+        if (control_bit == 1 && target_bit == 1) {
+            state->amplitudes[i] *= -1; // Inversione del segno dell'ampiezza
+        }
+    }
+}
+
+
 void applyCPhaseShift(QubitState *state, int control, int target, double complex phase) {
     long long dim = 1LL << state->numQubits;
 
