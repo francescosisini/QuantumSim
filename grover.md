@@ -1,6 +1,6 @@
 # Implementazione dell'Algoritmo di Grover con QuantumSim
 
-In questa pagina viene descritta l'implementazione dell'algoritmo di Grover utilizzando la libreria **QuantumSim**, presente nel repository [QuantumSim](https://github.com/francescosisini/QuantumSim). Questa implementazione è specifica per un sistema quantistico con 3 qubit, dove vengono marcati gli stati target \(|110\rangle\) e \(|111\rangle\).
+In questa pagina viene descritta l'implementazione dell'algoritmo di Grover utilizzando la libreria **QuantumSim**. Questa implementazione è specifica per un sistema quantistico con 3 qubit, dove vengono marcati gli stati target $|110\rangle\$ e \(|111\rangle\).
 
 ---
 
