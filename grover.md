@@ -1,6 +1,6 @@
 # Implementazione dell'Algoritmo di Grover con QuantumSim
 
-In questa pagina viene descritta l'implementazione dell'algoritmo di Grover utilizzando la libreria **QuantumSim**. Questa implementazione è specifica per un sistema quantistico con 3 qubit, dove vengono marcati gli stati target $|110\rangle\$ e \(|111\rangle\).
+In questa pagina viene descritta l'implementazione dell'algoritmo di Grover utilizzando la libreria **QuantumSim**. Questa implementazione è specifica per un sistema quantistico con 3 qubit, dove vengono marcati gli stati target $|110\rangle\$ e $|111\rangle$.
 
 ---
 
@@ -9,7 +9,7 @@ In questa pagina viene descritta l'implementazione dell'algoritmo di Grover util
 L'algoritmo di Grover è un metodo quantistico per la ricerca in database non strutturati che offre un'accelerazione quadratica rispetto agli approcci classici. In questa implementazione:
 
 1. **Hadamard-Walsh** viene applicato per creare una sovrapposizione uniforme di tutti gli stati.
-2. **L'oracolo** inverte il segno degli stati target \(|110\rangle\) e \(|111\rangle\).
+2. **L'oracolo** inverte il segno degli stati target $|110\rangle$ e $|111\rangle$.
 3. **L'operatore di diffusione** amplifica le ampiezze degli stati target.
 4. Alla fine, viene eseguita una **misurazione** per ottenere il risultato.
 
@@ -31,7 +31,7 @@ void applyHadamardWalsh(QubitState *state) {
 ```
 
 ### 2. Funzione `applyOracle`
-L'oracolo marca gli stati target \(|110\rangle\) e \(|111\rangle\) utilizzando il gate CCZ e un'operazione X:
+L'oracolo marca gli stati target $|110\rangle$ e $|111\rangle$ utilizzando il gate CCZ e un'operazione X:
 
 ```c
 void applyOracle(QubitState *state) {
@@ -120,7 +120,7 @@ void circuit() {
 
 ## Risultati attesi
 Dopo l'applicazione dell'algoritmo di Grover:
-1. Gli stati target \(|110\rangle\) e \(|111\rangle\) avranno probabilità amplificate.
+1. Gli stati target $|110\rangle$ e $|111\rangle$ avranno probabilità amplificate.
 2. La misurazione finale restituirà uno di questi stati con probabilità significativamente maggiore rispetto agli altri.
 
 ---

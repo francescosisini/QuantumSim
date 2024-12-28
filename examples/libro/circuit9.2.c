@@ -7,19 +7,19 @@ void applyHadamardWalsh(QubitState *state) {
     for (int i = 0; i < state->numQubits; i++) {
         applyHadamard(state, i);
     }
-    printf("[INFO] Applicato Hadamard-Walsh su tutti i qubit\n");
+    printf("Applicato Hadamard-Walsh su tutti i qubit\n");
     printState(state);
 }
 
 // Funzione per applicare l'oracolo 
 void applyOracle(QubitState *state) {
-    printf("[INFO] Applicazione dell'oracolo\n");
+    printf("Applicazione dell'oracolo\n");
     
-    // Marca lo stato |10⟩ usando un gate CZ
+    // Marca lo stato 10 usando un gate CZ
     applyX(state,0);
     applyCZ(state, 1, 0);
     applyX(state,0);
-    printf("[DEBUG] Marcato lo stato |10⟩\n");
+    printf(" Marcato lo stato 10\n");
       printState(state);
 }
 
@@ -27,7 +27,7 @@ void applyOracle(QubitState *state) {
  * Applica l'operatore di diffusione basato su Z e CZ
  */
 void applyDiffusion(QubitState *state) {
-    printf("[INFO] Applicazione dell'operatore di diffusione\n");
+    printf("Applicazione dell'operatore di diffusione\n");
 
     // Step 1: Hadamard su tutti i qubit
     for (int i = 0; i < state->numQubits; i++) {
@@ -47,18 +47,18 @@ void applyDiffusion(QubitState *state) {
         applyHadamard(state, i);
     }
 
-    printf("[DEBUG] Operatore di diffusione applicato\n");
+    printf("Operatore di diffusione applicato\n");
     printState(state);
 }
 
 
 // Funzione principale
 void circuit() {
-    printf("[INFO] Avvio dell'algoritmo di Grover\n");
+    printf("Avvio dell'algoritmo di Grover\n");
 
     // Inizializza lo stato con 2 qubit
     QubitState *state = initializeState(2);
-    printf("[INFO] Stato iniziale con 2 qubit\n");
+    printf("Stato iniziale con 2 qubit\n");
     printState(state);
 
     // Applica Hadamard-Walsh per creare la sovrapposizione uniforme
@@ -71,13 +71,13 @@ void circuit() {
     applyDiffusion(state);
 
     // Misura i qubit
-    printf("[INFO] Misurazione dello stato finale\n");
+    printf("Misurazione dello stato finale\n");
     for (int i = 0; i < state->numQubits; i++) {
         MeasurementResult result = measure(state, i);
-        printf("[RESULT] Misura del qubit %d: %d\n", i, result.result);
+        printf("Misura del qubit %d: %d\n", i, result.result);
     }
 
-    printf("[INFO] Stato finale dopo la misurazione\n");
+    printf("Stato finale dopo la misurazione\n");
     printState(state);
 }
 
