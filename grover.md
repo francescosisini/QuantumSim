@@ -129,8 +129,7 @@ Dopo l'applicazione dell'algoritmo di Grover:
 Compila ed esegui il codice per osservare i risultati:
 
 ```bash
-gcc -o grover_example quantum_sim.c -lm
-./grover_example
+make CIRCUIT_FILE=examples/libro/circuit9.3.c
 ```
 
 ---
