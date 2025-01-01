@@ -8,6 +8,25 @@
 
 QuantumSim è un simulatore di circuiti quantistici progettato per aiutare a comprendere e visualizzare l'esecuzione di vari algoritmi quantistici. Supporta la conversione tra diversi formati di descrizione del circuito e offre strumenti per analizzare i risultati dei test.
 
+## 📚 Il Libro su QuantumSim
+
+Abbiamo il piacere di annunciare che il libro su **QuantumSim**, che illustra le basi del quantum computing con esempi pratici utilizzando la libreria QuantumSim, è disponibile su **Amazon** in formato HardCover.
+
+🔗 **[Acquista il libro su Amazon](https://www.amazon.com)**
+
+### Scarica il PDF
+Per chi preferisce consultare il libro in formato elettronico, è possibile scaricare il PDF gratuitamente direttamente da questo repository.
+
+📥 **[Scarica il libro in formato PDF](./manuscript/iq_sisini.pdf)**
+
+### Segnalazioni di errori o problemi
+Se trovi errori, refusi o hai suggerimenti per migliorare il libro, ti invitiamo a segnalarli creando un'**Issue** nella sezione dedicata di questo repository. Saremo felici di analizzare il tuo feedback e migliorare il materiale.
+
+🔗 **[Crea una nuova Issue](https://github.com/QuantumSim/issues)**
+
+Grazie per il tuo supporto e buon apprendimento del quantum computing con QuantumSim!
+
+
 ## Caratteristiche
 
 - **Simulazione dei Circuiti Quantistici**: Simula vari circuiti quantistici e supporta molteplici algoritmi noti.
