@@ -12,7 +12,7 @@ QuantumSim è un simulatore di circuiti quantistici progettato per aiutare a com
 
 Abbiamo il piacere di annunciare che il libro su **QuantumSim**, che illustra le basi del quantum computing con esempi pratici utilizzando la libreria QuantumSim, è disponibile su **Amazon** in formato HardCover.
 
-🔗 **[Acquista il libro su Amazon](https://www.amazon.com)**
+🔗 **[Acquista il libro su Amazon](https://www.amazon.it/dp/B0DS1TV2BR)**
 
 ### Scarica il PDF
 Per chi preferisce consultare il libro in formato elettronico, è possibile scaricare il PDF gratuitamente direttamente da questo repository.
