@@ -1,5 +1,5 @@
 
-#include "quantum_sim.h"
+#include "../../src/quantum_sim.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
