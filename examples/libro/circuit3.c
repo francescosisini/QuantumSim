@@ -24,8 +24,9 @@ int circuit(void) {
     // Circuito 2: Applicazione dei gate Hadamard e Pauli-X seguiti da una misurazione
     printf("Circuito 2: Applicazione dei gate Hadamard e Pauli-X seguiti da una misurazione\n");
     initializeStateTo(state, 0); // Reset allo stato |0>
-    applyHadamard(state, 0);      // Applica il gate Hadamard
     applyX(state, 0);              // Applica il gate Pauli-X
+    applyHadamard(state, 0);      // Applica il gate Hadamard
+   
     printf("Stato dopo H e X:\n");
     printState(state);
     MeasurementResult m2 = measure(state, 0); // Misura il qubit 0
