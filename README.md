@@ -1,8 +1,8 @@
 
 # QuantumSim
 
-![Build Status](https://github.com/your-username/QuantumSim/actions/workflows/ci.yml/badge.svg)
-[![codecov](https://codecov.io/gh/your-username/QuantumSim/branch/main/graph/badge.svg)](https://codecov.io/gh/your-username/QuantumSim)
+![Build Status](https://github.com/francescosisini/QuantumSim/actions/workflows/ci.yml/badge.svg)
+[![codecov](https://codecov.io/gh/francescosisini/QuantumSim/branch/main/graph/badge.svg)](https://codecov.io/gh/francescosisini/QuantumSim)
 
 ## Introduzione
 
