@@ -17,7 +17,7 @@ Abbiamo il piacere di annunciare che il libro su **QuantumSim**, che illustra le
 ### Scarica il PDF
 Per chi preferisce consultare il libro in formato elettronico, è possibile scaricare il PDF gratuitamente direttamente da questo repository.
 
-📥 **[Scarica il libro in formato PDF](./manuscript/iq_sisini.pdf)**
+📥 **[Scarica il libro in formato PDF](./manuscript/informatica_quantistica.pdf)**
 
 ### Segnalazioni di errori o problemi
 Se trovi errori, refusi o hai suggerimenti per migliorare il libro, ti invitiamo a segnalarli creando un'**Issue** nella sezione dedicata di questo repository. Saremo felici di analizzare il tuo feedback e migliorare il materiale.
