@@ -12,20 +12,19 @@ C_TO_QASM_DIR = $(SRC_DIR)/c_to_qasm
 CIRCUIT_FILE ?= $(SRC_DIR)/circuit.c
 
 # File sorgente per il simulatore
-SRC = $(SRC_DIR)/quantum_sim.c $(CIRCUIT_FILE) $(SRC_DIR)/main.c
+# Includiamo: quantum_sim.c, quantum_density.c, noise_channels.c, il circuito e main.c
+SRC = $(SRC_DIR)/quantum_sim.c $(SRC_DIR)/quantum_density.c $(SRC_DIR)/noise_channels.c $(CIRCUIT_FILE) $(SRC_DIR)/main.c
 
 # Nome dell'eseguibile del simulatore
 TARGET = QuantumSim
 
 # File sorgente per il parser QASM
 PARSER_SRC = $(QASM_TO_C_DIR)/qasm_parser.c
-
 # Nome dell'eseguibile del parser QASM
 PARSER_TARGET = QasmParser
 
 # File sorgente per il parser da C a QASM
 C_TO_QASM_SRC = $(C_TO_QASM_DIR)/c_to_qasm.c
-
 # Nome dell'eseguibile per il parser da C a QASM
 C_TO_QASM_TARGET = CtoQasm
 
@@ -40,20 +39,16 @@ $(PARSER_TARGET): $(PARSER_SRC)
 $(C_TO_QASM_TARGET): $(C_TO_QASM_SRC)
 	$(CC) $(CFLAGS) -o $(C_TO_QASM_TARGET) $(C_TO_QASM_SRC) $(LDFLAGS)
 
-# Aggiunto target per eseguire i test
 test:
 	chmod +x run_tests.sh
 	./run_tests.sh
 
-# Target per generare la code coverage
 coverage:
 	lcov --capture --directory . --output-file coverage.info
 	lcov --remove coverage.info '/usr/*' --output-file coverage.info
 	lcov --list coverage.info
 
-# Pulizia degli artefatti di compilazione e file di code coverage
 clean:
 	rm -f $(TARGET) $(PARSER_TARGET) $(C_TO_QASM_TARGET) *.gcda *.gcno coverage.info
 
-# Target per eseguire pulizia, test e generazione di report di code coverage
 .PHONY: all clean test coverage
