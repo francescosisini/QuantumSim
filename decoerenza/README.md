@@ -92,18 +92,18 @@ L'azione complessiva sullo stato è:
 
 Poiché \(K_0^{(2)}\) e \(K_1^{(2)}\) sono rispettivamente \(\sqrt{1-p}(I\otimes I)\) e \(\sqrt{p}(Z\otimes I)\), possiamo scrivere:
 
-\[
+```math
+
 \rho_{\text{dephased}} = (1-p)\,\rho_1 + p\,(Z\otimes I)\,\rho_1\,(Z\otimes I).
-\]
+```
 
 **Azione di \(Z \otimes I\):**
 
 Nel sistema a due qubit, l'operatore \(Z \otimes I\) si presenta come:
 
-\[
-Z \otimes I = \operatorname{diag}(1,\,1,\,-1,\,-1),
-\]
-
+```math
+Z \otimes I = diagonale(1,\,1,\,-1,\,-1),
+```
 ordinando la base come \(|00\rangle,\, |01\rangle,\, |10\rangle,\, |11\rangle\). L'azione di \(Z\otimes I\) moltiplica per:
 - \(+1\) le componenti con primo qubit \(0\) (stati \(|00\rangle\) e \(|01\rangle\)),
 - \(-1\) le componenti con primo qubit \(1\) (stati \(|10\rangle\) e \(|11\rangle\)).
