@@ -1,6 +1,6 @@
 # Algoritmo di Deutsch con Formalismo delle Matrici Densità
 
-Questo documento descrive una catena di ragionamenti e calcoli eseguiti per analizzare l'algoritmo di Deutsch utilizzando il formalismo delle matrici densità (ρ) per un sistema a due qubit (matrice 4×4). In particolare, viene evidenziato l'effetto della decoerenza (dephasing) applicata al primo qubit e il suo impatto sul meccanismo di interferenza dell'algoritmo.
+Questo documento descrive i miei ragionamenti preliminari e calcoli eseguiti per analizzare l'algoritmo di Deutsch utilizzando il formalismo della matrice di densità (ρ) per un sistema a due qubit (matrice 4×4). In particolare, viene evidenziato l'effetto della decoerenza (dephasing) applicata al primo qubit e il suo impatto sul meccanismo di interferenza dell'algoritmo.
 
 ---
 
@@ -30,28 +30,30 @@ La matrice densità associata è:
 
 Il gate di Hadamard per un singolo qubit è dato da:
 
-\[
+```math
 H = \frac{1}{\sqrt{2}}
 \begin{pmatrix}
 1 & 1\\[0.3em]
 1 & -1
 \end{pmatrix}.
-\]
+```
 
-Applicando \(H\) a ciascun qubit, l'operatore totale è \(H \otimes H\). Sui singoli qubit:
-
-- \(H|0\rangle = \frac{1}{\sqrt{2}}(|0\rangle+|1\rangle)\),
-- \(H|1\rangle = \frac{1}{\sqrt{2}}(|0\rangle-|1\rangle)\).
-
+Applicando \(H\) a ciascun qubit, l'operatore totale è $` H \otimes H.`$ Sui singoli qubit:
+```math
+ H|0\rangle = \frac{1}{\sqrt{2}}(|0\rangle+|1\rangle),
+```
+```math
+ H|1\rangle = \frac{1}{\sqrt{2}}(|0\rangle-|1\rangle).
+```
 Quindi lo stato diventa:
 
-\[
+```math
 |\psi_1\rangle = (H\otimes H)\,|0,1\rangle = \frac{1}{2}\Bigl(|00\rangle - |01\rangle + |10\rangle - |11\rangle\Bigr).
-\]
+```
 
 La matrice densità associata è:
 
-\[
+```math
 \rho_1 = |\psi_1\rangle\langle\psi_1| = \frac{1}{4}
 \begin{pmatrix}
 1 & -1 & 1 & -1\\[0.3em]
@@ -59,7 +61,7 @@ La matrice densità associata è:
 1 & -1 & 1 & -1\\[0.3em]
 -1 & 1 & -1 & 1
 \end{pmatrix}.
-\]
+```
 
 ---
 
@@ -67,26 +69,26 @@ La matrice densità associata è:
 
 Per modellare la decoerenza (dephasing) sul primo qubit usiamo gli operatori di Kraus per un singolo qubit:
 
-\[
+```math
 K_0 = \sqrt{1-p}\, I, \quad K_1 = \sqrt{p}\, Z,
-\]
+```
 con
 
-\[
+```math
 Z = \begin{pmatrix}1 & 0\\[0.3em] 0 & -1\end{pmatrix}.
-\]
+```
 
 Estendiamo questi operatori al sistema a due qubit (in cui il canale agisce solo sul primo qubit):
 
-\[
+```math
 K_0^{(2)} = K_0 \otimes I = \sqrt{1-p}\,(I\otimes I), \quad K_1^{(2)} = K_1 \otimes I = \sqrt{p}\,(Z\otimes I).
-\]
+```
 
 L'azione complessiva sullo stato è:
 
-\[
+```math
 \rho_{\text{dephased}} = K_0^{(2)}\,\rho_1\,\left(K_0^{(2)}\right)^\dagger + K_1^{(2)}\,\rho_1\,\left(K_1^{(2)}\right)^\dagger.
-\]
+```
 
 Poiché \(K_0^{(2)}\) e \(K_1^{(2)}\) sono rispettivamente \(\sqrt{1-p}(I\otimes I)\) e \(\sqrt{p}(Z\otimes I)\), possiamo scrivere:
 
