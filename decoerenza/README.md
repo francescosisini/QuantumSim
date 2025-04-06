@@ -11,9 +11,9 @@ Questo documento descrive, a livello concettuale, i miei ragionaenti embrionali 
 - **Trasformazione:**  
   Si applica il gate di Hadamard a ciascun qubit.  
   Il risultato è uno stato in sovrapposizione:  
-  $
+  ```math
   |\psi_1\rangle = \frac{1}{2}\Bigl(|00\rangle - |01\rangle + |10\rangle - |11\rangle\Bigr).
-  $
+  ```
 - **Matrice densità:**  
   La matrice densità \(\rho_1\) derivante da questo stato è ricca di termini fuori diagonale, i quali sono essenziali per l'interferenza.
 
