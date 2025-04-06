@@ -198,9 +198,9 @@ che implica una probabilità del 50% di misurare $`0`$ e 50% di misurare $`1`$. 
 
 1. **Stato Iniziale:**
 
-   ```math
+```math
    \rho_{\text{in}} = |0,1\rangle\langle0,1|
-   ```
+```
 
 2. **Applicazione del Primo Hadamard (H⊗H):**
 
