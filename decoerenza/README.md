@@ -204,11 +204,11 @@ che implica una probabilità del 50% di misurare $`0`$ e 50% di misurare $`1`$. 
 
 2. **Applicazione del Primo Hadamard (H⊗H):**
 
-   ```math
+```math
    |\psi_1\rangle = \frac{1}{2}\Bigl(|00\rangle - |01\rangle + |10\rangle - |11\rangle\Bigr)
-   ```
+```
    
-   ```math
+```math
    \rho_1 = \frac{1}{4}
    \begin{pmatrix}
    1 & -1 & 1 & -1\\[0.3em]
@@ -216,17 +216,17 @@ che implica una probabilità del 50% di misurare $`0`$ e 50% di misurare $`1`$. 
    1 & -1 & 1 & -1\\[0.3em]
    -1 & 1 & -1 & 1
    \end{pmatrix}
-   ```
+```
 
 3. **Applicazione della Decoerenza (Dephasing sul Primo Qubit):**
 
-   ```math
+```math
    \rho_{\text{dephased}} = (1-p)\,\rho_1 + p\,(Z\otimes I)\,\rho_1\,(Z\otimes I)
-   ```
+```
    
    Con $`p=\frac{1}{2}`$ (massima decoerenza), si ottiene:
 
-   ```math
+```math
    \rho_{\text{dephased}} = \frac{1}{4}
    \begin{pmatrix}
    1 & -1 & 0 & 0\\[0.3em]
@@ -234,18 +234,18 @@ che implica una probabilità del 50% di misurare $`0`$ e 50% di misurare $`1`$. 
    0 & 0 & 1 & -1\\[0.3em]
    0 & 0 & -1 & 1
    \end{pmatrix}
-   ```
+```
 
 4. **Applicazione del Gate $`H \otimes I`$ e Riduzione:**
 
-   ```math
+```math
    \rho_{\text{final}} = (H\otimes I)\,\rho_{\text{dephased}}\,(H\otimes I)^\dagger,
-   ```
+```
    che porta a:
    
-   ```math
+```math
    \rho^{(1)}_{\text{final}} = \frac{I}{2} = \begin{pmatrix}\frac{1}{2} & 0\\[0.3em]0 & \frac{1}{2}\end{pmatrix}.
-   ```
+```
 
 5. **Effetto sulla Misurazione:**
 
