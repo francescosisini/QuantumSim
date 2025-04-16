@@ -66,10 +66,22 @@ H_{\text{int}} = \hbar \Omega \cos(\omega t + \phi)\, \sigma_x
 ```
 
 Dove:
- `$ Omega $` è la frequenza di Rabi (intensità dell'interazione)
- ```math\omega``` è la frequenza del campo
- ```math\phi``` è la fase
-```math\sigma_x``` induce transizioni tra |0\rangle e |1\rangle
+```math
+\Omega
+```
+è la frequenza di Rabi (intensità dell'interazione)
+```math
+\omega
+```
+è la frequenza del campo
+```math
+\phi
+```
+è la fase
+```math
+\sigma_x
+```
+induce transizioni tra $0\rangle$ e $1\rangle$
 
 ## 6. Modellazione dei gate quantistici
 Nel **rotating frame** e sotto la **rotating wave approximation (RWA)**, l'interazione si semplifica in una rotazione sullo sferoide di Bloch:
@@ -78,8 +90,8 @@ Nel **rotating frame** e sotto la **rotating wave approximation (RWA)**, l'inter
 H_{\text{eff}} = \frac{\hbar \Omega}{2} (\cos \phi\, \sigma_x + \sin \phi\, \sigma_y)
 ```
 
-Variando ```math\phi```, ```math\Omega``` e ```math\Delta t```, si ottengono diversi **quantum gate**:
-- Gate X (NOT): rotazione di ```math\pi``` attorno all'asse X
+Variando $\phi$, $\Omega$ e $\Delta t$, si ottengono diversi **quantum gate**:
+- Gate X (NOT): rotazione di $\pi$ attorno all'asse X
 - Gate H (Hadamard): combinazione di rotazioni
 - Rotazioni arbitrarie: controllando tempo e fase
 
@@ -91,8 +103,8 @@ In un sistema reale, la **decoerenza** degrada la coerenza quantistica. Possiamo
 ```
 
 Dove:
-- ```math\gamma``` è il tasso di decoerenza
-- I termini fuori diagonale (```math\rho_{01}, \rho_{10}```) decadono esponenzialmente, riducendo l'interferenza quantistica
+- $\gamma$ è il tasso di decoerenza
+- I termini fuori diagonale ($\rho_{01}, \rho_{10}$) decadono esponenzialmente, riducendo l'interferenza quantistica
 
 Questo modello permette di studiare **l'effetto della decoerenza** su fenomeni di sovrapposizione e interferenza, sia analiticamente che sperimentalmente (es. con forme d'onda audio modulate come nel progetto).
 
