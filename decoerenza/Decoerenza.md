@@ -9,21 +9,21 @@ Consideriamo un modello teorico in cui una particella quantistica (es. un elettr
 ## 2. Stati sinusoidali
 Le soluzioni sono **onde stazionarie sinusoidali**:
 
-\[
+`$
 \psi_n(x) = \sqrt{\frac{2}{L}} \sin\left(\frac{n\pi x}{L}\right), \quad n = 1, 2, 3, ...
-\]
+`$
 
 I corrispondenti **livelli energetici** sono:
 
-\[
+$
 E_n = \frac{n^2 \pi^2 \hbar^2}{2mL^2}
-\]
+$
 
 Questi stati sono **ortogonali e completi**, e la differenza tra due livelli può essere usata per definire un qubit.
 
 ## 3. Codifica di un qubit
 Consideriamo di codificare un **qubit** usando i due stati più bassi:
-- \(|0\rangle = \psi_1\) (frequenza associata \(\omega_1\))
+- $|0\rangle = \psi_1$ (frequenza associata $\omega_1$)
 - \(|1\rangle = \psi_2\) (frequenza associata \(\omega_2\))
 
 La differenza energetica tra i due livelli definisce la **frequenza di transizione del qubit**:
