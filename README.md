@@ -12,7 +12,7 @@ QuantumSim è un simulatore di circuiti quantistici progettato per aiutare a com
 
 🔗 **[Scopri il libro su Amazon](https://amzn.eu/d/04nWroyW)**
 
-Il libro "Esercizi di informatica quantistica: Guida pratica con l'uso del simulatore QuantumSim" introduce **QuantumSim** e propone una serie di esercizi guidati, accompagnati da brevi approfondimenti teorici, per comprendere il quantum computing sperimentando direttamente sul codice, senza dover attendere l’accesso a un computer quantistico reale.\\
+Il libro "Esercizi di informatica quantistica: Guida pratica con l'uso del simulatore QuantumSim" introduce **QuantumSim** e propone una serie di esercizi guidati, accompagnati da brevi approfondimenti teorici, per comprendere il quantum computing sperimentando direttamente sul codice, senza dover attendere l’accesso a un computer quantistico reale.
 È disponibile su **Amazon** in formato kindle e copertina flessibile.
 
 ### Scarica il PDF
