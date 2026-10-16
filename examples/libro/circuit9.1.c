@@ -1,4 +1,4 @@
-#include "quantum_sim.h"
+#include "../../src/quantum_sim.h"
 #include <stdio.h>
 
 // Definizione della funzione f(x)
@@ -36,7 +36,7 @@ int circuit(void) {
     printState(state);
 
     // Applicazione di U_f
-    int type = 0; // Scegliere il tipo di funzione: 0, 1, 2 o 3
+    int type = 3; // Scegliere il tipo di funzione: 0, 1, 2 o 3
     applyUf(state, 0, 1, type);
     printf("Stato dopo U_f:\n");
     printState(state);
