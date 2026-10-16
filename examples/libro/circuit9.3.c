@@ -2,10 +2,6 @@
 #include <math.h>
 #include <stdio.h>
 
-#include "../../src/quantum_sim.h"
-#include <math.h>
-#include <stdio.h>
-
 // Funzione per applicare Hadamard-Walsh su tutti i qubit
 void applyHadamardWalsh(QubitState *state) {
     for (int i = 0; i < state->numQubits; i++) {
@@ -21,9 +17,17 @@ void applyOracle(QubitState *state) {
     
     // Marca lo stato |110⟩ e |111⟩ usando i gate CCZ
     applyX(state, 0);
+    printf(" Dopo ApplyX\n");
+    printState(state);
     applyCCZ(state, 1, 2, 0);
+    printf(" Dopo CCZ\n");
+    printState(state);
     applyX(state, 0);
+    printf(" Dopo ApplyX\n");
+    printState(state);
     applyCCZ(state, 1, 2, 0);
+    printf(" Dopo CCZ\n");
+    printState(state);
 
     printf("Stato marcato: |110⟩ e |111⟩ \n");
     printState(state);
@@ -39,24 +43,34 @@ void applyDiffusion(QubitState *state) {
     for (int i = 0; i < state->numQubits; i++) {
         applyHadamard(state, i);
     }
+    printf(" Step 1: Applica Hadamard su tutti i qubit\n");
+    printState(state);
 
     // Step 2: Inverte il segno di tutti gli stati (applica gate X)
     for (int i = 0; i < state->numQubits; i++) {
         applyX(state, i);
     }
+    printf(" Step 2: Inverte il segno di tutti gli stati (applica gate X)\n");
+    printState(state);
 
     // Step 3: Applica un gate CCZ per la riflessione rispetto a |000⟩
     applyCCZ(state, 1, 2, 0);
+    printf(" Step 3: Applica un gate CCZ per la riflessione rispetto a |000⟩\n");
+    printState(state);
 
     // Step 4: Ripristina i qubit applicando di nuovo X
     for (int i = 0; i < state->numQubits; i++) {
         applyX(state, i);
     }
+    printf(" Step 4: Ripristina i qubit applicando di nuovo X\n");
+    printState(state);
 
     // Step 5: Applica Hadamard su tutti i qubit per completare la riflessione
     for (int i = 0; i < state->numQubits; i++) {
         applyHadamard(state, i);
     }
+    printf(" Step 5: Applica Hadamard su tutti i qubit per completare la riflessione\n");
+    printState(state);
 
     printf("Operatore di diffusione applicato con successo\n");
     printState(state);
