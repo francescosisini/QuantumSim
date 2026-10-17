@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 550 740" fill="none">
+<defs><linearGradient id="bg" x1="0" y1="0" x2="550" y2="740" gradientUnits="userSpaceOnUse"><stop stop-color="#172838"/><stop offset="1" stop-color="#0b1824"/></linearGradient><radialGradient id="g" cx="0" cy="0" r="1" gradientTransform="translate(284 390) rotate(90) scale(300)"><stop stop-color="#2a5660"/><stop offset="1" stop-color="#101f2a" stop-opacity="0"/></radialGradient><filter id="glow" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="7"/></filter></defs>
+<rect width="550" height="740" fill="url(#bg)"/><rect width="550" height="740" fill="url(#g)"/>
+<path d="M33 0V740" stroke="#e4fda7" stroke-opacity=".18" stroke-width="2"/>
+<path d="M0 540H550M0 564H550M0 588H550M0 612H550M0 636H550M0 660H550M0 684H550M0 708H550" stroke="#e4fda7" stroke-opacity=".09"/>
+<text x="56" y="65" font-family="Arial, sans-serif" font-size="19" font-weight="700" letter-spacing="4" fill="#dcfa8d">QUANTUMSIM / 01</text>
+<text x="56" y="151" font-family="Arial,sans-serif" font-size="49" font-weight="700" fill="#f7f5ed">ESERCIZI PER LA</text>
+<text x="56" y="206" font-family="Arial,sans-serif" font-size="43" font-weight="700" fill="#f7f5ed">COMPUTAZIONE</text>
+<text x="56" y="259" font-family="Arial,sans-serif" font-size="43" font-weight="700" fill="#f7f5ed">QUANTISTICA</text>
+<text x="57" y="307" font-family="Arial,sans-serif" font-size="18" fill="#b7cbc9">Guida pratica all’uso del</text>
+<text x="57" y="333" font-family="Arial,sans-serif" font-size="18" fill="#b7cbc9">simulatore QuantumSim</text>
+<g stroke="#cefb83" stroke-width="3"><path d="M71 422H479M71 515H479" opacity=".38"/><path d="M92 408V530M220 408V530M349 408V530M457 408V530" opacity=".18"/></g>
+<g stroke="#c9f583" stroke-width="3" fill="#142735"><rect x="116" y="399" width="66" height="66" rx="8"/><rect x="310" y="492" width="66" height="66" rx="8"/></g>
+<g fill="#e9ffb4" font-family="Arial, sans-serif" font-size="29" font-weight="700" text-anchor="middle"><text x="149" y="443">H</text><text x="343" y="536">X</text></g>
+<g stroke="#ffaf91" stroke-width="2.8"><path d="M243 421V517"/><circle cx="243" cy="421" r="10" fill="#ffaf91"/><circle cx="243" cy="516" r="19"/></g><path d="M224 517H262" stroke="#ffaf91" stroke-width="2.8"/>
+<g filter="url(#glow)" fill="#dbfa91" opacity=".6"><circle cx="148" cy="422" r="9"/><circle cx="343" cy="515" r="9"/></g>
+<path d="M55 608H495" stroke="#dcf5a4" stroke-opacity=".3"/><text x="57" y="652" font-family="Arial,sans-serif" font-size="23" letter-spacing="1.5" fill="#f7f5ed">VALENTINA SISINI</text><text x="57" y="695" font-family="monospace" font-size="15" fill="#a3b9b2">FROM THEORY TO CODE_</text>
+</svg>
