@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#0c1924">
+  <meta name="description" content="QuantumSim: impara la computazione quantistica sperimentando con il codice C. Scopri il simulatore open source, 18 esercizi guidati, gli algoritmi di Deutsch e Grover e il libro di Valentina Sisini.">
+  <meta name="author" content="QuantumSim — progetto open source">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="it_IT">
+  <meta property="og:title" content="QuantumSim — Il quantum computing, da capire facendo.">
+  <meta property="og:description" content="Un simulatore open source in C, un laboratorio interattivo e un libro di esercizi guidati per imparare sperimentando.">
+  <meta property="og:url" content="https://francescosisini.github.io/QuantumSim/">
+  <meta property="og:image" content="https://francescosisini.github.io/QuantumSim/assets/og-card.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="canonical" href="https://francescosisini.github.io/QuantumSim/">
+  <link rel="icon" href="./assets/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600;700;800&family=Instrument+Serif:ital@0;1&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <title>QuantumSim — Il quantum computing, da capire facendo.</title>
+  <link rel="stylesheet" href="./styles.css">
+  <script src="./app.js" defer></script>
+</head>
+<body>
+<a class="skip-link" href="#main">Vai al contenuto</a>
+<div class="notice"><span class="notice-dot"></span> PROGETTO OPEN SOURCE <span class="notice-sep">/</span> UN SIMULATORE, UN LIBRO, UN PERCORSO <a href="#inizia">INIZIA DA QUI <span aria-hidden="true">↗</span></a></div>
+<header class="site-header" id="top">
+  <div class="nav-wrap content-width">
+    <a class="brand" href="#top" aria-label="QuantumSim — torna all'inizio"><span class="brand-symbol"><span class="orb"></span><span class="tail"></span></span><span>Quantum<span class="brand-light">Sim</span><span class="brand-sup">_</span></span></a>
+    <button class="nav-toggle" type="button" aria-label="Apri il menu" aria-expanded="false" aria-controls="main-nav"><span></span><span></span><span></span></button>
+    <nav id="main-nav" class="nav-links" aria-label="Navigazione principale">
+      <a href="#perche">Il progetto</a><a href="#laboratorio">Laboratorio</a><a href="#esercizi">Esercizi</a><a href="#libro">Il libro</a><a href="#inizia">Come iniziare</a>
+    </nav>
+    <a class="nav-github external-link" href="https://github.com/francescosisini/QuantumSim" target="_blank" rel="noopener noreferrer" aria-label="Apri QuantumSim su GitHub in una nuova scheda"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 .7a11.3 11.3 0 0 0-3.57 22.02c.56.1.76-.24.76-.54l-.02-2.1c-3.1.67-3.75-1.31-3.75-1.31-.5-1.27-1.23-1.61-1.23-1.61-1.01-.69.08-.67.08-.67 1.11.08 1.69 1.15 1.69 1.15.99 1.7 2.59 1.2 3.22.92.1-.72.39-1.2.71-1.48-2.48-.28-5.09-1.24-5.09-5.5 0-1.21.44-2.2 1.15-2.98-.12-.29-.5-1.42.11-2.96 0 0 .94-.3 3.07 1.14a10.67 10.67 0 0 1 5.59 0c2.13-1.44 3.06-1.14 3.06-1.14.61 1.54.23 2.67.12 2.96.71.78 1.14 1.77 1.14 2.98 0 4.27-2.61 5.22-5.1 5.5.4.35.76 1.02.76 2.06l-.01 3.06c0 .3.2.65.77.54A11.3 11.3 0 0 0 12 .7Z"/></svg><span>GitHub</span><span aria-hidden="true">↗</span></a>
+  </div>
+</header>
+<main id="main">
+  <section class="hero" aria-labelledby="hero-title">
+    <div class="hero-background" aria-hidden="true"><div class="hero-grid"></div><div class="hero-aura"></div></div>
+    <div class="content-width hero-layout">
+      <div class="hero-copy reveal">
+        <div class="eyebrow"><span class="eyebrow-line"></span> COMPUTAZIONE QUANTISTICA, SENZA SCATOLA NERA</div>
+        <h1 id="hero-title">La teoria è il punto di partenza.<br><em>Il codice è la scoperta.</em></h1>
+        <p class="hero-lead">QuantumSim è un simulatore open source scritto in <strong>C</strong> per esplorare qubit, porte e algoritmi quantistici. Un modo concreto per imparare: costruisci un circuito, eseguilo e osserva che cosa succede.</p>
+        <div class="hero-actions"><a class="btn btn-lime" href="#laboratorio">Esplora il laboratorio <span aria-hidden="true">↗</span></a><a class="btn btn-outline" href="https://github.com/francescosisini/QuantumSim" target="_blank" rel="noopener noreferrer">Vedi il codice <span aria-hidden="true">↗</span></a></div>
+        <div class="hero-facts"><div><strong>18</strong><span>esercizi guidati</span></div><span class="facts-divider"></span><div><strong>02</strong><span>algoritmi classici del QC</span></div><span class="facts-divider"></span><div><strong>C</strong><span>linguaggio del simulatore</span></div></div>
+      </div>
+      <div class="hero-visual reveal" aria-label="Rappresentazione artistica di un circuito con una porta Hadamard e una CNOT">
+        <div class="hero-visual-top"><span><span class="live-dot"></span> QUANTUM CIRCUIT / 001</span><span>STATEVECTOR.EXE</span></div>
+        <div class="hero-quantum-graphic">
+          <div class="graph-orbits" aria-hidden="true"><div class="orbit orbit-one"></div><div class="orbit orbit-two"></div><div class="orbit orbit-three"></div><span class="orbit-core"></span></div>
+          <div class="hero-circuit"><div class="hero-wire"><span class="wire-label">q₀</span><div class="wire-line"></div><div class="hero-gate">H</div><div class="wire-line"></div><div class="control-point"></div><div class="wire-line"></div><span class="wire-end">|0⟩</span></div><div class="hero-wire"><span class="wire-label">q₁</span><div class="wire-line"></div><span class="empty-gate"></span><div class="wire-line"></div><div class="not-point"><span></span></div><div class="wire-line"></div><span class="wire-end">|0⟩</span></div><div class="connect-wire"></div></div>
+          <div class="hero-math"><span>I ⊗ H</span><span class="math-arrow">→</span><span>CNOT</span><span class="math-arrow">→</span><strong>(|00⟩ + |11⟩)/√2</strong></div>
+        </div>
+        <div class="hero-visual-bottom"><span>ENTANGLEMENT <span class="symbol-check">↗</span></span><span class="mono-muted">ANALYZE / LEARN / REPEAT</span></div>
+        <span class="hero-floating-tag tag-top">01 — INIZIALIZZA</span><span class="hero-floating-tag tag-bottom">02 — OSSERVA</span>
+      </div>
+    </div>
+    <div class="hero-bottom content-width"><span>SCORRI PER ESPLORARE</span><span class="scroll-line"></span><span>UN LABORATORIO APERTO A TUTTI</span></div>
+  </section>
+
+  <section class="intro section-light" id="perche" aria-labelledby="intro-title">
+    <div class="content-width">
+      <div class="section-kicker"><span class="kicker-index">01 / IL PROGETTO</span><span class="kicker-rule"></span><span>QUANDO IL SOFTWARE DIVENTA UNO STRUMENTO PER CAPIRE</span></div>
+      <div class="intro-grid"><h2 class="heading-xl reveal" id="intro-title">Non limitarti a <em>immaginare</em> un qubit.<br>Guardalo <span class="underline-accent">evolvere.</span></h2><div class="intro-detail reveal"><p>Su un computer quantistico reale, la misura restituisce un risultato classico e, in generale, modifica lo stato del sistema. Con un simulatore puoi anche ispezionare le ampiezze durante il calcolo, senza eseguire una misura fisica.</p><p><strong>QuantumSim rende visibili i passaggi intermedi:</strong> dalle prime porte logiche agli stati entangled, fino ai circuiti degli algoritmi di Deutsch e Grover.</p><a class="text-link" href="https://github.com/francescosisini/QuantumSim/blob/master/INTRODUCTION.md" target="_blank" rel="noopener noreferrer">Approfondisci il progetto <span aria-hidden="true">↗</span></a></div></div>
+      <div class="benefits-grid"><article class="benefit-card reveal"><div class="benefit-icon"><span>⌘</span></div><span class="tiny-label">01 — OPEN SOURCE</span><h3>Il codice è aperto.</h3><p>Un progetto scritto in C da leggere, modificare e utilizzare come base per i tuoi esperimenti.</p></article><article class="benefit-card reveal"><div class="benefit-icon benefit-icon-rings"><span>◉</span></div><span class="tiny-label">02 — VISIBILITÀ</span><h3>Ogni ampiezza conta.</h3><p>Osserva gli stati intermedi, le ampiezze complesse e le trasformazioni applicate dai gate.</p></article><article class="benefit-card reveal"><div class="benefit-icon"><span>↗</span></div><span class="tiny-label">03 — DIDATTICA</span><h3>Impari facendo.</h3><p>Un percorso progressivo di esercizi e algoritmi, accompagnato dalla teoria necessaria per comprenderli.</p></article></div>
+    </div>
+  </section>
+
+  <section class="signal-strip" aria-label="Concetti quantistici"><div class="ticker"><span>QUBIT</span><span class="ticker-star">✳</span><span>SUPERPOSIZIONE</span><span class="ticker-star">✳</span><span>ENTANGLEMENT</span><span class="ticker-star">✳</span><span>INTERFERENZA</span><span class="ticker-star">✳</span><span>MISURA</span><span class="ticker-star">✳</span><span>QUBIT</span><span class="ticker-star">✳</span><span>SUPERPOSIZIONE</span><span class="ticker-star">✳</span><span>ENTANGLEMENT</span><span class="ticker-star">✳</span></div></section>
+
+  <section class="lab section-dark" id="laboratorio" aria-labelledby="lab-title">
+    <div class="content-width">
+      <div class="section-kicker kicker-on-dark"><span class="kicker-index">02 / LABORATORIO</span><span class="kicker-rule"></span><span>PROVA LE TRASFORMAZIONI</span></div>
+      <div class="lab-heading reveal"><div><h2 class="heading-xl" id="lab-title">Ora tocca <em>a te.</em></h2><p>Applica le porte a un sistema di due qubit e guarda come cambiano le probabilità. Parti da <code>|00⟩</code>, prova <code>H(q₀)</code> e poi <code>CNOT</code> per costruire uno stato di Bell.</p></div><div class="lab-label"><span class="lab-led"></span> DEMO INTERATTIVA <span class="small-label">/ NEL BROWSER</span></div></div>
+      <div class="lab-shell reveal">
+        <div class="lab-toolbar"><span class="lab-tab active-tab"><span class="tab-icon">▦</span> QUANTUM LAB</span><span class="lab-tab muted-tab">2-QUBIT STATE</span><div class="lab-toolbar-right"><span class="status-light"></span> PRONTO PER L'ESPERIMENTO</div></div>
+        <div class="lab-content">
+          <div class="lab-left">
+            <div class="panel-title"><span>01</span><h3>Costruisci il circuito</h3></div>
+            <p class="panel-note">Seleziona le porte nell'ordine in cui vuoi applicarle.</p>
+            <div class="gate-group-label">PORTE A UN QUBIT</div>
+            <div class="gate-buttons" role="group" aria-label="Porte su un qubit"><button type="button" data-gate="H0" class="gate-button"><strong>H</strong><small>q₀</small></button><button type="button" data-gate="H1" class="gate-button"><strong>H</strong><small>q₁</small></button><button type="button" data-gate="X0" class="gate-button"><strong>X</strong><small>q₀</small></button><button type="button" data-gate="X1" class="gate-button"><strong>X</strong><small>q₁</small></button><button type="button" data-gate="Z0" class="gate-button"><strong>Z</strong><small>q₀</small></button><button type="button" data-gate="Z1" class="gate-button"><strong>Z</strong><small>q₁</small></button></div>
+            <div class="gate-group-label">PORTE A DUE QUBIT</div>
+            <div class="gate-buttons multi-gates" role="group" aria-label="Porte su due qubit"><button type="button" data-gate="CNOT" class="gate-button large-gate"><strong>CNOT</strong><small>q₀ → q₁</small></button><button type="button" data-gate="CZ" class="gate-button large-gate"><strong>CZ</strong><small>q₀ ↔ q₁</small></button></div>
+            <div class="lab-controls"><button id="measureBtn" class="mini-action action-measure" type="button">◎ Esegui una misura</button><button id="resetBtn" class="mini-action action-reset" type="button">↺ Ricomincia</button></div>
+            <div class="lab-toast" aria-live="polite" id="labToast">Stato iniziale <strong>|00⟩</strong> pronto.</div>
+          </div>
+          <div class="lab-right">
+            <div class="panel-title"><span>02</span><h3>Osserva lo stato</h3><span class="lab-state-tag" id="labStepCount">0 OPERAZIONI</span></div>
+            <div class="circuit-preview"><div class="preview-heading"><span>SEQUENZA DEL CIRCUITO</span><span id="circuitShort">|00⟩</span></div><div id="circuitSteps" class="circuit-steps" aria-live="polite"><span class="empty-circuit">|00⟩ <span aria-hidden="true">───</span> scegli una porta per iniziare</span></div></div>
+            <div class="prob-header"><span>PROBABILITÀ DI MISURA</span><span class="prob-total">Σ P = 100%</span></div>
+            <div class="prob-list" id="probList" aria-live="polite"><div class="prob-row"><span>|00⟩</span><div class="prob-track"><div class="prob-fill" style="width:100%"></div></div><strong>100%</strong></div><div class="prob-row"><span>|01⟩</span><div class="prob-track"><div class="prob-fill" style="width:0%"></div></div><strong>0%</strong></div><div class="prob-row"><span>|10⟩</span><div class="prob-track"><div class="prob-fill" style="width:0%"></div></div><strong>0%</strong></div><div class="prob-row"><span>|11⟩</span><div class="prob-track"><div class="prob-fill" style="width:0%"></div></div><strong>0%</strong></div></div>
+            <div class="amplitudes-heading"><span>AMPIEZZE COMPLESSE</span><span>Re + Im·i</span></div>
+            <div class="amplitudes" id="amplitudes" aria-live="polite"></div>
+          </div>
+        </div>
+        <div class="lab-code-panel"><div class="code-panel-heading"><span><span class="code-dot"></span> CIRCUITO EQUIVALENTE IN C</span><button class="copy-code" type="button" id="copyCircuit"><span aria-hidden="true">⧉</span> Copia codice</button></div><pre id="generatedCode" class="generated-code"><code></code></pre></div>
+        <div class="lab-footnote"><span aria-hidden="true">ⓘ</span> Questa è una <strong>dimostrazione didattica in JavaScript</strong> del modello ideale di due qubit: non esegue il motore QuantumSim in C. Per provare il simulatore originale, <a href="#inizia">segui le istruzioni di installazione</a>.</div>
+      </div>
+      <div class="lab-note"><span class="asterisk">✳</span><p>La differenza importante: <strong>stampare uno stato in un simulatore non equivale a misurarlo.</strong> Il libro parte proprio da questa distinzione, poi costruisce le competenze necessarie per riconoscere sovrapposizione, correlazione e interferenza nel codice.</p></div>
+    </div>
+  </section>
+
+  <section class="learning section-light" id="esercizi" aria-labelledby="learning-title">
+    <div class="content-width">
+      <div class="section-kicker"><span class="kicker-index">03 / IL PERCORSO</span><span class="kicker-rule"></span><span>DAL PRIMO QUBIT AGLI ALGORITMI</span></div>
+      <div class="learning-header reveal"><div><h2 class="heading-xl" id="learning-title">18 esperimenti.<br><em>Infinite domande.</em></h2><p>Una sequenza di esercizi che segue il capitolo 5 del libro: ogni passo introduce un'idea, la traduce in C e invita a osservare il risultato.</p></div><div class="learning-stat"><strong>18<span>+</span>2</strong><span>ESERCIZI + ALGORITMI</span></div></div>
+      <div class="journey-rail" aria-label="Le tappe del percorso"><a href="#exercise-browser" class="journey-item"><span class="journey-index">01—03</span><span class="journey-symbol">|0⟩</span><strong>Stati</strong><small>Il punto di partenza</small></a><a href="#exercise-browser" class="journey-item"><span class="journey-index">04—09</span><span class="journey-symbol">H · X · Z</span><strong>Porte e fasi</strong><small>Le prime trasformazioni</small></a><a href="#exercise-browser" class="journey-item"><span class="journey-index">10—16</span><span class="journey-symbol">⨂</span><strong>Due qubit</strong><small>Accoppiamento e interferenza</small></a><a href="#exercise-browser" class="journey-item"><span class="journey-index">17—18</span><span class="journey-symbol">CCZ</span><strong>Tre qubit</strong><small>Controlli multipli</small></a></div>
+      <div class="exercise-browser" id="exercise-browser">
+        <div class="exercise-head"><div><span class="eyebrow-dark">ESPLORA LA RACCOLTA</span><h3>Tutti gli esercizi, un clic dal codice.</h3></div><div class="exercise-search"><label class="sr-only" for="exerciseSearch">Cerca un esercizio</label><span aria-hidden="true">⌕</span><input id="exerciseSearch" type="search" placeholder="Cerca gate, stato, argomento..." autocomplete="off"></div></div>
+        <div class="exercise-filters" role="group" aria-label="Filtra gli esercizi"><button type="button" class="filter-button is-selected" data-filter="all" aria-pressed="true">Tutti <span>18</span></button><button type="button" class="filter-button" data-filter="stati" aria-pressed="false">Stati</button><button type="button" class="filter-button" data-filter="porte" aria-pressed="false">Porte</button><button type="button" class="filter-button" data-filter="due" aria-pressed="false">Due qubit</button><button type="button" class="filter-button" data-filter="tre" aria-pressed="false">Tre qubit</button></div>
+        <div class="exercise-grid" id="exerciseGrid" aria-live="polite"></div>
+        <p class="exercise-empty" id="exerciseEmpty" hidden>Nessun esercizio corrisponde alla ricerca. Prova un altro termine.</p>
+        <div class="exercise-footer"><span>Ogni file si compila dalla cartella principale con <code>make -B CIRCUIT_FILE=Esercizi/nomefile.c</code>.</span><a class="text-link" href="https://github.com/francescosisini/QuantumSim/tree/master/Esercizi" target="_blank" rel="noopener noreferrer">Apri la cartella Esercizi <span aria-hidden="true">↗</span></a></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="algorithms section-accent" id="algoritmi" aria-labelledby="algorithm-title"><div class="content-width"><div class="section-kicker"><span class="kicker-index">04 / OLTRE LE BASI</span><span class="kicker-rule"></span><span>QUANDO LE PORTE DIVENTANO ALGORITMI</span></div><div class="alg-heading"><h2 class="heading-xl" id="algorithm-title">Dai singoli gate<br>alle <em>grandi idee.</em></h2><p>I capitoli 6 e 7 del libro mostrano come le trasformazioni studiate negli esercizi si combinano in due algoritmi fondamentali.</p></div><div class="algo-grid"><article class="algo-card"><div class="algo-top"><span>ALGORITMO 01 / DEUTSCH</span><span class="algo-asterisk">✳</span></div><div class="algo-glyph">f(0)<span>≠</span>f(1)</div><h3>Una funzione è costante o bilanciata?</h3><p>L’algoritmo di Deutsch determina una proprietà globale di una funzione booleana usando una sola interrogazione dell'oracolo.</p><a class="algo-link" href="https://github.com/francescosisini/QuantumSim/blob/master/Esercizi/algo_1_deutsch.c" target="_blank" rel="noopener noreferrer">Esplora l'algoritmo <span aria-hidden="true">↗</span></a><span class="algo-chapter">NEL LIBRO — CAPITOLO 6</span></article><article class="algo-card"><div class="algo-top"><span>ALGORITMO 02 / GROVER</span><span class="algo-asterisk">✳</span></div><div class="grover-graphic" aria-hidden="true"><div class="gbar" style="height:12%"></div><div class="gbar" style="height:12%"></div><div class="gbar" style="height:12%"></div><div class="gbar" style="height:12%"></div><div class="gbar" style="height:12%"></div><div class="gbar" style="height:12%"></div><div class="gbar emph" style="height:85%"></div><div class="gbar emph" style="height:85%"></div></div><h3>Come trovare ciò che stai cercando?</h3><p>Grover combina oracolo e diffusione per amplificare le probabilità degli stati target, sfruttando l'interferenza.</p><a class="algo-link" href="https://github.com/francescosisini/QuantumSim/blob/master/Esercizi/algo_2_grover.c" target="_blank" rel="noopener noreferrer">Esplora l'algoritmo <span aria-hidden="true">↗</span></a><span class="algo-chapter">NEL LIBRO — CAPITOLO 7</span></article></div></div></section>
+
+  <section class="book section-light" id="libro" aria-labelledby="book-title"><div class="content-width"><div class="section-kicker"><span class="kicker-index">05 / IL LIBRO</span><span class="kicker-rule"></span><span>UNA GUIDA PER IMPARARE SPERIMENTANDO</span></div><div class="book-layout"><div class="book-art-area reveal"><div class="book-disc"></div><div class="book-object"><div class="book-spine"></div><img src="./assets/book-art.svg" loading="eager" alt="Illustrazione editoriale del libro Esercizi per la computazione quantistica di Valentina Sisini"></div><span class="book-art-caption">INTERPRETAZIONE GRAFICA DEL VOLUME</span><div class="book-mark"><span>DAL LIBRO</span><strong>5 → 7</strong><small>CAPITOLI PRATICI</small></div></div><div class="book-copy reveal"><div class="book-label"><span class="label-rule"></span> DAL CODICE ALLA COMPRENSIONE</div><h2 id="book-title">La teoria serve.<br><em>La pratica insegna.</em></h2><p class="book-title-small">Esercizi per la computazione quantistica</p><p class="book-subtitle">Guida pratica all’uso del simulatore QuantumSim</p><p class="author-line">DI <strong>VALENTINA SISINI</strong></p><p class="book-description">Il libro accompagna il lettore nell'uso concreto di QuantumSim: ogni esercizio introduce la teoria necessaria, propone un circuito scritto in C e guida nell'osservazione dei risultati. Non serve attendere l'accesso a un computer quantistico reale per iniziare a sperimentare.</p><div class="book-points"><div><span>01</span><p><strong>Fondamenti essenziali</strong> — Stati, ampiezze, gate e misura spiegati quando servono.</p></div><div><span>02</span><p><strong>Esercizi progressivi</strong> — Dai primi qubit alla sovrapposizione e all'entanglement.</p></div><div><span>03</span><p><strong>Algoritmi completi</strong> — Deutsch e Grover, dalla teoria alla simulazione.</p></div></div><div class="book-actions"><a class="btn btn-ink" href="https://amzn.eu/d/0eY301Ol" target="_blank" rel="noopener noreferrer">Scopri il libro su Amazon <span aria-hidden="true">↗</span></a><a class="book-text-link" href="#esercizi">Vai agli esercizi <span aria-hidden="true">↗</span></a></div><p class="book-notice">Titolo e sottotitolo ripresi dal frontespizio del PDF fornito; la grafica qui mostrata è un’illustrazione del volume, non la copertina commerciale.</p></div></div></div></section>
+
+  <section class="start section-dark" id="inizia" aria-labelledby="start-title"><div class="content-width"><div class="section-kicker kicker-on-dark"><span class="kicker-index">06 / METTITI ALL'OPERA</span><span class="kicker-rule"></span><span>IL TUO PRIMO CIRCUITO TI ASPETTA</span></div><div class="start-heading reveal"><div><h2 class="heading-xl" id="start-title">Da zero al tuo<br>primo <em>circuito.</em></h2><p>Ti bastano Git, un compilatore C e Make. Il simulatore gira sul tuo computer: nessuna credenziale per accedere a hardware quantistico.</p></div><div class="step-counter">3 PASSI<br><span>PER INIZIARE</span></div></div>
+    <div class="os-tabs" role="group" aria-label="Seleziona il sistema operativo"><button data-os="linux" type="button" class="os-tab active-os" aria-pressed="true">Linux</button><button data-os="mac" type="button" class="os-tab" aria-pressed="false">macOS</button><button data-os="windows" type="button" class="os-tab" aria-pressed="false">Windows (WSL)</button></div>
+    <p id="osHint" class="os-hint" aria-live="polite">Su Ubuntu/Debian puoi installare gli strumenti necessari con <code>sudo apt install git build-essential</code>.</p>
+    <div class="start-steps"><div class="start-step"><div class="start-step-title"><span>01</span><div><strong>Scarica il progetto</strong><p>Clona il repository ufficiale nel tuo computer.</p></div></div><div class="step-code"><code>git clone https://github.com/francescosisini/QuantumSim.git<br>cd QuantumSim</code><button class="step-copy" data-copy="git clone https://github.com/francescosisini/QuantumSim.git&#10;cd QuantumSim" type="button" aria-label="Copia i comandi per scaricare QuantumSim">⧉</button></div></div><div class="start-step"><div class="start-step-title"><span>02</span><div><strong>Compila il simulatore</strong><p>Genera l'eseguibile usando il Makefile.</p></div></div><div class="step-code"><code>make</code><button class="step-copy" data-copy="make" type="button" aria-label="Copia il comando make">⧉</button></div></div><div class="start-step"><div class="start-step-title"><span>03</span><div><strong>Esegui un esercizio</strong><p>Compila un circuito e osserva l'output.</p></div></div><div class="step-code"><code>make -B CIRCUIT_FILE=Esercizi/es_12_first_bell_state.c<br>./QuantumSim</code><button class="step-copy" data-copy="make -B CIRCUIT_FILE=Esercizi/es_12_first_bell_state.c&#10;./QuantumSim" type="button" aria-label="Copia i comandi per il primo stato di Bell">⧉</button></div></div></div>
+    <div class="start-bottom"><p><span>✳</span> Il comando <code>make -B</code> ricompila anche quando cambi file dell'esercizio, evitando di riutilizzare un eseguibile precedente.</p><a href="https://github.com/francescosisini/QuantumSim" target="_blank" rel="noopener noreferrer" class="btn btn-lime">Apri il repository <span aria-hidden="true">↗</span></a></div>
+  </div></section>
+
+  <section class="closing section-accent"><div class="content-width closing-layout"><span class="closing-star" aria-hidden="true">✳</span><div><span class="closing-label">LA CURIOSITÀ È IL PRIMO STRUMENTO.</span><h2>Non devi aspettare il futuro<br>per <em>iniziare a capirlo.</em></h2></div><a href="https://github.com/francescosisini/QuantumSim" target="_blank" rel="noopener noreferrer" class="round-arrow" aria-label="Scopri QuantumSim su GitHub">↗</a></div></section>
+</main>
+<footer class="footer"><div class="content-width"><div class="footer-main"><div><a class="brand footer-brand" href="#top"><span class="brand-symbol"><span class="orb"></span><span class="tail"></span></span><span>Quantum<span class="brand-light">Sim</span><span class="brand-sup">_</span></span></a><p>Un progetto open source per esplorare la computazione quantistica, una riga di C alla volta.</p></div><div class="footer-column"><span>ESPLORA</span><a href="#perche">Il progetto</a><a href="#laboratorio">Laboratorio interattivo</a><a href="#esercizi">Esercizi guidati</a><a href="#libro">Il libro</a></div><div class="footer-column"><span>RISORSE</span><a href="https://github.com/francescosisini/QuantumSim" target="_blank" rel="noopener noreferrer">Codice su GitHub ↗</a><a href="https://github.com/francescosisini/QuantumSim/issues" target="_blank" rel="noopener noreferrer">Segnala un problema ↗</a><a href="https://github.com/francescosisini/QuantumSim/blob/master/LICENSE" target="_blank" rel="noopener noreferrer">Licenza GPL-3.0 ↗</a><a href="https://amzn.eu/d/0eY301Ol" target="_blank" rel="noopener noreferrer">Libro su Amazon ↗</a></div></div><div class="footer-bottom"><span>© QUANTUMSIM · PROGETTO OPEN SOURCE</span><span>SITO STATICO · GITHUB PAGES READY</span><a href="#top">TORNA SU ↑</a></div></div></footer>
+<div class="site-toast" role="status" aria-live="polite" id="siteToast"></div>
+</body>
+</html>
